@@ -1,4 +1,7 @@
 var fs = require('fs');
+var util = require('../util');
+
+var readJSON = util.readJSON;
 
 angular
 	.module('todoApp')
@@ -27,13 +30,6 @@ function TodoController($scope, $timeout, settings) {
 	vm.form_focus = false;
 	vm.expand = false;
 
-	vm.toggleCategory = toggleCategory;
-	vm.active_category = 'all';
-	vm.categories = [
-		{ type: 'all', color: 'green' },
-		{ type: 'important', color: 'purple' }
-	];
-
 	$scope.$watch(function () {
 		return settings.getconfLocale();
 	}, function () {
@@ -41,9 +37,7 @@ function TodoController($scope, $timeout, settings) {
 		vm.btn_enter = settings.data.btn_enter;
 	});
 
-	function toggleCategory(type) {
-		vm.active_category = type;
-	}
+	init();
 
 	function add(task) {
 		// eslint-disable-next-line no-console
@@ -126,28 +120,20 @@ function TodoController($scope, $timeout, settings) {
 		return null;
 	}
 
-	/*ipcRenderer.on('user', function(event, args) {*/
 	// eslint-disable-next-line no-undef
-	vm.name = vm.name || args[0];
-	fs.stat('./' + vm.name.toLowerCase() + '.todo.json', function (err) {
-		// eslint-disable-next-line no-console
-		console.time('Loading todos');
-		if (err == null) {
-			fs.readFile('./' + vm.name.toLowerCase() + '.todo.json', function (err, data) {
-				if (err) throw err;
-				vm.todos = JSON.parse(data);
-				$scope.$apply();
-				// eslint-disable-next-line no-console
-				console.log(vm.todos);
-			});
-		} else {
-			vm.todos = settings.todos = [];
+	function init() {
+		vm.name = vm.name || args[0];
+
+		var file_path = './' + vm.name.toLowerCase() + '.todo.json';
+		readJSON(file_path, function(result) {
+			if(result != null) {
+				vm.todos = result;
+			} else {
+				vm.todos = settings.todos || [];
+			}
 			$scope.$apply();
-		}
-		// eslint-disable-next-line no-console
-		console.timeEnd('Loading todos');
-	});
-	/*});*/
+		})
+	}
 }
 
 TodoController.$inject = ['$scope', '$timeout', 'SettingsConfig'];

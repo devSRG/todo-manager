@@ -35,7 +35,6 @@
         </div>
         <ul>
           <li><a ng-class="{'selected' : 'todo' ==  nav.page}" href="#" ng-click="nav.applyPage('todo')">{{ nav.todo }}</a></li>
-          <li><a ng-class="{'selected' : 'todo_form' ==  nav.page}" href="#" ng-click="nav.applyPage('todo_form')">{{ nav.new_todo }}</a></li>
           <li><a ng-class="{'selected' : 'completed' ==  nav.page}" href="#" ng-click="nav.applyPage('completed')">{{ nav.completed }}</a></li>
           <li><a ng-class="{'selected' : 'settings' ==  nav.page}" href="#" ng-click="nav.applyPage('settings')">{{ nav.settings }}</a></li>
           <button class="logout" ng-click="nav.log_out()">{{ nav.logout }}</button>

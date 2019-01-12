@@ -7,7 +7,7 @@ gulp.task('clean', function() {
 });
 
 gulp.task('build_pug', function() {
-  return gulp.src(['src/views/*.pug', 'src/components/*.pug'])
+  gulp.src(['src/views/*.pug', 'src /components/*.pug'])
     .pipe(pug({
       pretty: true
     }))
@@ -15,7 +15,7 @@ gulp.task('build_pug', function() {
 });
 
 gulp.task('build_sass', function() {
-  return gulp.src(['src/css/styles.sass', 'src/css/login.sass'])
+  gulp.src(['src/css/styles.sass', 'src/css/login.sass'])
     .pipe(sass({
       pretty: true,
       outputStyle: 'expanded'
@@ -24,15 +24,11 @@ gulp.task('build_sass', function() {
 });
 
 gulp.task('build_js', function() {
-  return gulp.src('src/**/*.js')
+  gulp.src('src/**/*.js')
     .pipe(gulp.dest('build/'));
 });
 
-gulp.task('build', function() {
-  build_pug();
-  build_sass();
-  build_js();
-});
+gulp.task('build', ['build_pug', 'build_sass', 'build_js']);
 
 gulp.task('watch', function() {
   gulp.watch(['src/views/**/*.pug', 'src/js/components/*.pug'], ['pug']);

@@ -1,6 +1,6 @@
 {
   "name": "todo-app",
-  "version": "1.0.0",
+  "version": "0.0.4",
   "description": "An application to manage your todo list",
   "main": "main.js",
   "author": "Sachintha Gunaratne",

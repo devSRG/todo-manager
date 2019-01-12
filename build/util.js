@@ -1,4 +1,6 @@
 var fs = require('fs');
+// eslint-disable-next-line no-unused-vars
+var path = require('path');
 
 function saveJSON(path, data) {
     var json_data = angular.toJson(data, true);
@@ -12,7 +14,7 @@ function readJSON(path, cb) {
 			fs.readFile(path, 'utf8', function (err, data) {
 				if (err) throw err;
 				
-				var json_data = JSON.parse(data);
+				var json_data = JSON.parse(data, 4);
 
 				if(cb instanceof Function) {
 					cb(json_data);
@@ -20,8 +22,17 @@ function readJSON(path, cb) {
 					return json_data;
 				}
 			});
+		} else if(err.code == 'ENOENT') {
+			return null;
 		}
 	});
+}
+
+function saveConfig(config) {
+	// eslint-disable-next-line no-console
+	console.log('Saving config..');
+
+	saveJSON('./config.json', config);
 }
 
 function readConfig(cb) {
@@ -40,6 +51,7 @@ function readConfig(cb) {
 		} else if (err.code == 'ENOENT') {
 			// eslint-disable-next-line no-console
 			console.log('Missing config file.')
+			return null;
 		} else {
 			throw err;
 		}
@@ -48,6 +60,7 @@ function readConfig(cb) {
 
 module.exports = {
     saveJSON: saveJSON,
-    readJSON: readJSON,
+	readJSON: readJSON,
+	saveConfig: saveConfig,
     readConfig: readConfig
 };

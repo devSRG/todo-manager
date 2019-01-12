@@ -1,7 +1,10 @@
 var fs = require('fs');
 var i18n = require('i18n');
 var util = require('../util');
-var readConfig = util.readConfig;
+// eslint-disable-next-line no-unused-vars
+var saveJSON = util.saveJSON,
+	readConfig = util.readConfig,
+	saveConfig = util.saveConfig;
 // eslint-disable-next-line no-unused-vars
 var ipcRenderer = require('electron').ipcRenderer;
 
@@ -15,29 +18,24 @@ function SettingsConfig() {
 	var config = {};
 	var todos = [];
 
+	config.font_size = 'small';
+	config.user_locale = 'en-US';
+
 	init();
 	setUpLocaleStrings();
 
 	return {
-		saveConfig: saveConfig,
 		getconfLocale: getconfLocale,
 		setconfLocale: setconfLocale,
 		getFontSize: getFontSize,
 		setFontSize: setFontSize,
 		getPage: getPage,
 		setPage: setPage,
+		config: config,
 		data: data,
 		todos: todos,
 		alert: alert
 	};
-
-	function saveConfig() {
-		// eslint-disable-next-line no-console
-		console.log('Saving config..');
-		
-		var config_data = angular.toJson(config, true);
-		fs.writeFileSync('./config.json', config_data, 'utf-8');
-	}
 
 	function getconfLocale() {
 		return config.user_locale;
@@ -60,14 +58,6 @@ function SettingsConfig() {
 
 	function setFontSize(size) {
 		config.font_size = size;
-		var body = document.getElementsByTagName('body')[0];
-		if(config.font_size == 'Small') {
-			body.style = 'font-size: 14px;';
-		} else if (config.font_size == 'Medium') {
-			body.style = 'font-size: 16px;';
-		} else {
-			body.style = 'font-size: 18px;';
-		}
 	}
 
 	function getPage() {
@@ -91,11 +81,10 @@ function SettingsConfig() {
 		i18n.configure(i18nOpts);
 
 		readConfig(function(result) {
-			config = result;
+			if(result !== null) config = result;
+			setconfLocale(config.user_locale);
+			setFontSize(config.font_size);
 		});
-
-		setconfLocale(config.user_locale);
-		setFontSize(config.font_size);
 	}
 
 	function setUpLocaleStrings() {
