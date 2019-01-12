@@ -1,0 +1,132 @@
+#title-bar
+  background: darken($primary-color, 10%)
+  color: #ccc
+  height: 30px
+  font-size: 12px
+  overflow: hidden
+  -webkit-app-region: drag
+
+#title-bar p
+  color: #aaa
+  margin: 6px 10px
+  text-shadow: 1px 1px 1px #111
+  float: left
+
+#title-bar button
+  background: darken($primary-color, 10%)
+  color: #aaa
+  width: 30px
+  height: 30px
+  border: none
+  border-color: #aaa
+  float: right
+  box-sizing: border-box
+  -webkit-app-region: no-drag
+
+#title-bar button.minimize:before
+  content: ""
+  width: 10px
+  height: 10px
+  border-color: inherit
+  border-style: solid
+  border-top-width: 0
+  border-right-width: 0
+  border-bottom-width: 2px
+  border-left-width: 0
+  margin: 0 auto
+  display: block
+  box-sizing: border-box
+
+#title-bar button.maximize:before
+  content: ""
+  width: 10px
+  height: 10px
+  border-color: inherit
+  border-style: solid
+  border-width: 2px
+  border-bottom-width: 3px
+  margin: 0 auto
+  display: block
+  box-sizing: border-box
+
+#title-bar button.close:before
+  content: "+"
+  width: 14px
+  height: 14px
+  margin: 0 auto
+  font-size: 24px
+  line-height: 14px
+  transform: rotate(45deg)
+  display: block
+
+#title-bar button.close:hover
+  color: #e85656
+
+#title-bar button:not(:disabled):hover
+  background: darken($primary-color, 5%)
+  border-color: #eee
+
+#title-bar button:disabled
+  background: darken($primary-color, 6%)
+  cursor: default
+
+.profile-info
+  width: 100%
+  text-align: center
+
+.profile
+  width: 100px
+  height: 100px
+  background: #ccc
+  background-position: 50px 0
+  border-radius: 50%
+  line-height: 100px
+  margin: 25px auto 10px auto
+  overflow: hidden
+
+  img
+    width: 100px
+
+  div
+    color: #9d9d9d
+    font-size: 48px
+    font-weight: 700
+
+.profile-info > span
+  color: #383838
+  background: #b3b3b3
+  padding: 2px 4px
+  font-size: 12px
+  font-weight: 700
+  border-radius: 2px
+
+.pages
+  visibility: hidden
+  opacity: 0
+  height: 0
+
+  &.is-shown
+    height: auto
+    visibility: visible
+    opacity: 1
+    transition: .5s all
+
+.container
+  position: relative
+
+.logout
+  height: 34px
+  color: #aaa
+  background: transparent
+  border: 2px solid #aaa
+  border-radius: 17px
+  padding: 0px 12px
+  position: absolute
+  bottom: 45px
+  left: 50%
+  transform: translateX(-50%)
+  transition: all 0.2s ease
+
+  &:hover
+    background: #aaa
+    color: #ededed

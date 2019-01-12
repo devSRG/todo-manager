@@ -1,0 +1,5 @@
+.select(ng-click="$ctrl.toggle()" ng-blur="$ctrl.blurred()")
+	span {{ $ctrl.value }}
+	.options(ng-show="$ctrl.expand")
+		ul
+			li(ng-repeat="option in $ctrl.options" ng-click="$ctrl.selectValue($event)") {{ option }}

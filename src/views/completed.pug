@@ -1,0 +1,9 @@
+div.container.todo(ng-controller="TodoController as td")
+  .todo-list
+    todo-item(ng-cloak
+              ng-repeat="todo in td.todos | filter : {completed:true} track by todo.id"
+              ng-class="{'selected': todo.id == td.selected_task}"
+              todo="todo"
+              selected="td.selected_task"
+              on-remove="td.remove(todo.id)"
+              ng-click="td.toggle(todo.id)")

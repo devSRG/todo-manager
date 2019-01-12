@@ -1,0 +1,12 @@
+doctype html
+html
+  head
+    include includes/head.pug
+  body(ng-app="todoApp")
+    - var only_close = false;
+    include includes/titlebar.pug
+    include includes/menu.pug
+
+    main(ng-controller="PageController as pg" ng-class="pg.fontsize")
+      div.pages(ng-repeat="item in pg.pages" ng-class="{'is-shown': item === pg.page()}" ng-include="item + '.html'")
+      div.alert-dialog(ng-if="pg.alert") {{ pg.msg }}

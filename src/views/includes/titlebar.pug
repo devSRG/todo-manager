@@ -1,0 +1,9 @@
+#title-bar
+  if only_close
+    p {{ title }}
+    button.close(name="close" ng-click="close()")
+  else
+    p {{ title }}
+    button.close(name="close" ng-click="close()")
+    button.maximize(name="maximize" ng-click="maximize()" ng-disabled="maximize_enabled")
+    button.minimize(name="minimize" ng-click="minimize()")

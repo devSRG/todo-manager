@@ -1,0 +1,30 @@
+
+<div class="container todo" ng-controller="TodoController as td">
+  <form class="input">
+    <div class="top-section">
+      <input type="text" name="todo-name" ng-model="td.task" placeholder="{{ td.add_todo }}"/>
+      <button id="submit_btn" ng-click="td.add(td.task)" ng-disabled="td.task == ''">{{ td.btn_enter }}</button>
+    </div>
+    <div class="toggle" ng-click="td.toggleOptions()" ng-class="{'active' : td.expand}">Options</div>
+    <div class="bottom-section grid" ng-class="{'show' : td.expand}">
+      <div class="row">
+        <label for="desc">Description</label>
+        <input type="text" name="desc" style="width:100%;margin-top:8px;" ng-model="desc"/>
+      </div>
+      <div class="row">
+        <div class="col-2">
+          <div class="date-input">
+            <label class="left" for="date">Date</label>
+            <input class="right" type="text" name="date" ng-model="date"/>
+            <date-picker ng-model="date" ng-show="false"></date-picker>
+            <tadate-picker></tadate-picker>
+          </div>
+        </div>
+        <div class="col-2">
+          <label class="left" for="complete_check">Mark complete</label>
+          <input class="right" type="checkbox" name="complete_check"/>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

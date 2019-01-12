@@ -1,0 +1,25 @@
+html
+  head
+    link(rel="stylesheet" href="../css/login.css")
+    script(src="../../node_modules/angular/angular.min.js")
+    script(src="http://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-animate.min.js")
+    script(src="../../src/app.module.js")
+    script(src="../../src/controllers/login.controller.js")
+  body(ng-app="todoLogin" ng-controller="loginController as lg")
+
+    - var only_close = true;
+    include includes/titlebar.pug
+
+    #login-form
+      h1 {{ lg.heading }}
+      .profile
+        .overlay
+        img(ng-src="{{ lg.avatar }}" ng-class="{'is-user': lg.user_avail}" ng-show="lg.avatar")
+      form
+        input(type="text" ng-model="lg.name" ng-keyup="lg.checkUser($event)" autofocus)
+        button.login-btn(ng-hide="lg.create_user_visible" ng-disabled="lg.login_btn_disabled" ng-click="lg.login()") Login
+        button.new-user-btn(ng-show="lg.create_user_visible" ng-disabled="lg.register_btn_disabled" ng-click="lg.register()") Register
+        a.new-user(ng-hide="lg.create_user_visible" ng-click="lg.toggleNew()") Create User
+        a.back(ng-show="lg.create_user_visible" ng-click="lg.toggleNew()") Go back
+    #err-msg
+      p(ng-if="lg.notify != ''") {{ lg.notify }}

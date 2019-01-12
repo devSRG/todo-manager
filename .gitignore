@@ -1,0 +1,13 @@
+node_modules/
+public/
+
+src/img
+locales/*.json
+!locales/en-Us.json
+
+*.sublime-project
+*.sublime-workspace
+
+*todo.json
+*users.json
+*.db

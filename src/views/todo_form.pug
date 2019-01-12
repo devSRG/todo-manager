@@ -1,0 +1,22 @@
+div.container.todo(ng-controller="TodoController as td")
+  form.input
+    .top-section
+      input(type="text" name="todo-name" ng-model="td.task" placeholder="{{ td.add_todo }}")
+      button(id="submit_btn" ng-click="td.add(td.task)" ng-disabled="td.task == ''") {{ td.btn_enter }}
+
+    .toggle(ng-click="td.toggleOptions()" ng-class="{'active' : td.expand}") Options
+
+    .bottom-section.grid(ng-class="{'show' : td.expand}")
+      .row
+        label(for="desc") Description
+        input(type="text" name="desc" style="width:100%;margin-top:8px;" ng-model="desc")
+      .row
+        .col-2
+          .date-input
+            label(for="date" class="left") Date
+            input(type="text" class="right" name="date" ng-model="date")
+            date-picker(ng-model="date" ng-show="false")
+            tadate-picker
+        .col-2
+          label(for="complete_check" class="left") Mark complete
+          input(type="checkbox" class="right" name="complete_check")

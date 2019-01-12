@@ -1,0 +1,10 @@
+{
+  "title" : "To do Manager",
+  "todo" : "To do",
+  "new_todo": "New To do",
+  "completed" : "Completed",
+  "settings" : "Settings",
+  "btn_enter" : "Enter",
+  "logout" : "Log out",
+  "add_todo" : "Anything to add?"
+}

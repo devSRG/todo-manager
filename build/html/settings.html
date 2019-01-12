@@ -1,0 +1,27 @@
+
+<div class="container settings" ng-controller="SettingsController as st">
+  <h3>Keymap</h3>
+  <table>
+    <tr ng-repeat="key in st.keymaps">
+      <td>{{ key.def }}</td>
+      <td><kbd>{{ key.com }}</kbd></td>
+    </tr>
+  </table>
+  <h3>Language</h3>
+  <tm-select options="st.locales" default-value="st.locale" on-change="st.changeLang(lang)"></tm-select>
+  <h3>Application</h3>
+  <table>
+    <tr>
+      <td>Select font size</td>
+      <td>
+        <tm-select options="st.font_sizes" default-value="st.font_size" on-change="st.changeFontSize(fontsize)"></tm-select>
+      </td>
+    </tr>
+    <tr>
+      <td>Theme</td>
+      <td style="text-align: end;">
+        <div class="theme-options" ng-repeat="theme in st.themes" title="{{ theme.name }}" style="background: {{ theme.color }}"></div>
+      </td>
+    </tr>
+  </table>
+</div>

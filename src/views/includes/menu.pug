@@ -1,0 +1,22 @@
+-
+  var menus = [
+    {'name': 'todo', 'page': 'todo'},
+    {'name': 'new_todo', 'page': 'todo_form'},
+    {'name': 'completed', 'page': 'completed'},
+    {'name': 'settings', 'page': 'settings'}
+  ];
+
+aside
+  nav(ng-controller="NavController as nav")
+    .profile-info
+      .profile
+        div(ng-if="nav.avatar == ''") {{ nav.first_letter }}
+        img(ng-src="{{ nav.avatar }}" ng-class="{'is-user': nav.user_avail}")
+      span {{ nav.user }}
+
+    ul
+      each item in menus
+        li
+          a(ng-class="{'selected' : '" + item.page + "' ==  nav.page}" href="#" ng-click="nav.applyPage('" + item.page + "')") {{ nav.#{item.name} }}
+
+      button.logout(ng-click="nav.log_out()") {{ nav.logout }}

@@ -1,0 +1,12 @@
+.list(ng-cloak ng-click="$ctrl.toggle($ctrl.todo.id)")
+  .row
+    div.left
+      span.tag.dur-todo(ng-if="false" title="Duration") {{ $ctrl.duration }}
+    div.right
+      div.close-btn(ng-click="$ctrl.emitRemove($ctrl.todo.id)") &times;
+  .row
+    p.title {{ $ctrl.todo.title }}
+    p.desc(ng-if="$ctrl.todo.desc") {{ $ctrl.todo.desc }}
+  .row
+    button.todo-edit(ng-show="$ctrl.selectedTask == $ctrl.todo.id") Edit
+    button.todo-edit(ng-show="$ctrl.selectedTask == $ctrl.todo.id") Mark complete
