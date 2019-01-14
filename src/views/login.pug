@@ -21,5 +21,5 @@ html
         button.new-user-btn(ng-show="lg.create_user_visible" ng-disabled="lg.register_btn_disabled" ng-click="lg.register()") Register
         a.new-user(ng-hide="lg.create_user_visible" ng-click="lg.toggleNew()") Create User
         a.back(ng-show="lg.create_user_visible" ng-click="lg.toggleNew()") Go back
-    #err-msg
+    #notify-msg
       p(ng-if="lg.notify != ''") {{ lg.notify }}

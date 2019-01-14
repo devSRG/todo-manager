@@ -14,7 +14,7 @@ function loginController($rootScope, $scope) {
 	vm.heading = 'Log In';
 	vm.name = '';
 	vm.avatar = '';
-	vm.err = '';
+	vm.notify = '';
 	vm.login = login;
 	vm.blur = onblur;
 	vm.register = register;
