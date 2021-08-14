@@ -1,0 +1,21 @@
+.container.settings(ng-controller="SettingsController as st")
+  h2(ta-i18n="SETTINGS.title") Settings
+  .section
+    h3(ta-i18n="SETTINGS.keymap") Keymap
+    table
+      tr(ng-repeat="key in st.keymaps")
+        td {{ key.def }}
+        td: kbd {{ key.com }}
+  .section
+    h3(ta-i18n="SETTINGS.application-settings-title") Application
+    table
+      tr
+        td(ta-i18n="COMMON.language") Language
+        td: ta-select(options="st.locales" default-value="st.locale.label" on-change="st.setLocale(value)")
+      tr
+        td(ta-i18n="SETTINGS.fontsize-select") Select font size
+        td: ta-select(options="st.fontSizes" default-value="st.fontSize.label" on-change="st.setFontSize(value)")
+      tr
+        td(ta-i18n="SETTINGS.theme") Theme
+        td(style="text-align: end;")
+          .theme-options(ng-repeat="theme in st.themes" title="{{ theme.name }}" style="background: {{ theme.color }}" ng-class="{'active': theme.name == st.theme.name}" ng-click="st.setTheme(theme.name)")

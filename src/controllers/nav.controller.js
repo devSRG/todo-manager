@@ -1,50 +1,31 @@
 var ipcRenderer = require('electron').ipcRenderer;
 
 angular
-	.module('todoApp')
-	.controller('NavController', NavController);
+    .module('todo-app')
+    .controller('NavController', NavController);
 
-// eslint-disable-next-line no-unused-vars
-function NavController($rootScope, $scope, settings) {
-	var vm = this;
+function NavController($rootScope, util,  ipc) {
+    var vm = this;
+    var user = util.localStorage.get('user');
 
-	vm.page = 'todo';
-	vm.user = localStorage.getItem('username');
-	vm.avatar = localStorage.getItem('user_avatar');
-	vm.first_letter = localStorage.getItem('username').charAt(0).toUpperCase();
-	vm.applyPage = applyPage;
-	vm.log_out = logout;
-	vm.user_avail = false;
+    vm.currentPage = 'dashboard';
+    vm.username = user && user.name;
+    vm.avatar = user && user.avatar;
+    vm.firstLetter = user && user.name.charAt(0).toUpperCase();
+    vm.updatePage = updatePage;
+    vm.logOut = logout;
+    vm.userAvailable = false;
 
-	$scope.$watch(function() {
-		return settings.getconfLocale();
-	}, function() {
-		vm.todo = settings.data.todo;
-		vm.new_todo = settings.data.new_todo;
-		vm.completed = settings.data.completed;
-		vm.settings = settings.data.settings;
-		vm.logout = settings.data.logout;
-	});
+    function updatePage(page) {
+        vm.currentPage = page;
 
-	function applyPage(page) {
-		vm.page = page;
+        $rootScope.updatePage(page);
+    }
 
-		settings.setPage(page);
-	}
-
-	function logout() {
-		ipcRenderer.send('logout');
-	}
-
-	// eslint-disable-next-line no-unused-vars
-	ipcRenderer.on('user', function(event, args) {
-		vm.user = args[0];
-		vm.avatar = args[1];
-		vm.first_letter = vm.user.charAt(0).toUpperCase();
-
-		if(vm.avatar != '') vm.user_avail = true;
-		$scope.$apply();
-	});
+    function logout() {
+        util.localStorage.remove('user');
+        ipc.send(ipc.cmd.LOGOUT);
+    }
 }
 
-NavController.$inject = ['$rootScope', '$scope', 'SettingsConfig'];
+NavController.$inject = ['$rootScope', 'utility', 'ipc'];

@@ -1,10 +1,44 @@
 {
-  "title" : "To do Manager",
-  "todo" : "To do",
-  "new_todo": "New To do",
-  "completed" : "Completed",
-  "settings" : "Settings",
-  "btn_enter" : "Enter",
-  "logout" : "Log out",
-  "add_todo" : "Anything to add?"
+	"COMMON": {
+		"logout": "Log out",
+		"todo": "To do",
+		"btn-enter": "Enter",
+		"description": "Description",
+		"date": "Date",
+		"language": "Language",
+		"login": "Log In",
+		"create-user": "Create user",
+		"register": "Register",
+		"go-back": "Go back",
+		"app-title": "COMMON.app-title",
+		"title": "COMMON.title",
+		"category": "COMMON.category"
+	},
+	"MENU": {
+		"todo": "To do",
+		"new-todo": "New To do",
+		"completed": "Completed",
+		"settings": "Settings",
+		"dashboard": "MENU.dashboard",
+		"categories": "MENU.categories"
+	},
+	"TODO": {
+		"mark-complete": "Mark complete",
+		"edit": "Edit",
+		"add-todo-placeholder": "Anything to add?"
+	},
+	"SETTINGS": {
+		"title": "Settings",
+		"keymap": "Keymap",
+		"application-settings-title": "Application",
+		"fontsize-select": "Select font size",
+		"theme": "Theme"
+	},
+	"": "",
+	"$ctrl": {
+		"titleTranslationKey": "$ctrl.titleTranslationKey"
+	},
+	"btn": {
+		"translationKey": "btn.translationKey"
+	}
 }

@@ -1,0 +1,245 @@
+::-webkit-scrollbar
+  width: 20px
+
+::-webkit-scrollbar-thumb
+  background: $scrollbar-thumb-bg
+  border: 6px solid $scrollbar-thumb-border
+  border-top: 0
+  border-bottom: 0
+  border-radius: 8px
+
+::-webkit-scrollbar-corner
+  background: $scrollbar-corner-bg
+
+html, body
+  width: 100%
+  height: 100%
+  color: $primary-text
+  background: $primary
+  margin: 0
+  padding: 0
+  font-family: 'Open Sans', sans-serif
+  overflow: hidden
+  user-select: none
+
+h1, h2, h3, h4, h5, h6
+  color: $primary-text
+  margin-top: 0
+
+h1
+  font-size: 1.8em
+
+h2
+  font-size: 1.6em
+
+h3
+  font-size: 1.4em
+
+h4
+  font-size: 1.2em
+
+a
+  color: $primary-text
+  text-decoration: none
+  cursor: default
+  transition: all 0.2s ease
+
+  &:hover
+    color: $primary-text-shade-lighter
+
+p
+  margin-top: 0
+
+ul
+  list-style: none
+  padding: 0
+  margin: 0
+
+div
+  color: $primary-text
+
+kbd
+  background: $kbd-bg
+  padding: 5px 8px
+  border-radius: 2px
+
+table
+  width: 100%
+
+  td
+    color: $primary-text
+    padding: 5px
+
+label
+  display: inline-block
+  margin-bottom: 6px
+
+select
+  color: $select-text
+  background: $select-bg
+  float: right
+  padding: 2px
+  margin-bottom: 5px
+  border: 1px solid $select-border
+
+  &:focus
+    outline: none
+    border: 1px solid $select-focus-border
+
+input:not([type=checkbox]), textarea
+  width: 100%
+  color: $input-text
+  background: $input-bg
+  border: 1px solid $input-border
+  border-radius: 2px
+  padding: 6px 8px
+  box-sizing: border-box
+  transition: all 0.2s ease
+
+  &:focus
+    outline: none
+    background: $input-focus-bg
+    border-color: $input-focus-border
+
+textarea
+  font-family: 'Open Sans', sans-serif
+  resize: none
+
+input[type=checkbox]
+  display: inline
+  width: 16px
+  height: 16px
+  padding: 0
+  margin: 0 4px
+  border: 2px solid #ddd
+  border-radius: 2px
+  outline: none
+
+  &:checked
+    background: #ddd
+
+  &:checked::after
+    display: block
+    content: "\2714"
+    width: 16px
+    height: 16px
+    color: #444
+    font-size: 20px
+    line-height: 14px
+    text-align: center
+
+button
+  color: $btn-text
+  background: $btn-bg
+  padding: 8px 20px
+  border: 0
+  border-radius: 4px
+  outline: none
+  outline: 0
+  cursor: default
+  transition: all 0.2s ease
+
+  &:disabled
+    background: $btn-disabled
+
+  &:not(:disabled)
+    &:hover
+      color: $btn-hover-text
+      background: $btn-hover-bg
+
+    &.primary
+      background: $accent
+
+      &:hover, &:focus
+        background: $accent-shade-lighter
+
+#title-bar
+  background: $titlebar-bg
+  color: $titlebar-text
+  height: 30px
+  font-size: 12px
+  overflow: hidden
+  -webkit-app-region: drag
+
+  .title
+    display: inline-block
+
+    p
+      margin: 0px 10px
+      line-height: 30px
+      text-shadow: 1px 1px 1px $titlebar-shadow
+
+.window-btns
+  display: inline-block
+  margin: 1px
+  position: absolute
+  right: 0
+
+  button
+    display: inline-block
+    background: $titlebar-btn-bg
+    color: $titlebar-btn-text
+    width: 30px
+    height: 30px
+    margin: 0px -2px /* negative margin to get rid of the annoying spacing between inline-block elements */
+    border: none
+    -webkit-app-region: no-drag
+
+    &:first-child
+      margin: 0px -2px 0px 0px;
+
+    &:last-child
+      margin: 0px 0px 0px -2px;      
+
+    &:not(:disabled):hover
+      background: $titlebar-btn-hover-bg
+
+    &:disabled
+      opacity: 0.5
+
+    &.close:not(:disabled):hover svg path
+      fill: $red
+
+.clear-fix
+  clear: both
+
+.center
+  margin: 0 auto
+  text-align: center
+
+.container
+  width: 100%
+  height: 100%
+  position: relative
+  overflow: hidden
+
+.input-group
+  position: relative
+
+  .icon
+    width: 16px
+    height: 16px
+    position: absolute
+    top: 10px
+    right: 10px
+    opacity: 0.8
+    transition: opacity 0.6s ease
+
+    &:hover
+      opacity: 1
+
+  input[type="text"]
+    padding-right: 34px
+
+.combined-textarea
+  position: relative
+
+  span
+    color: $primary-text-shade-darker
+    font-size: 0.8em
+    position: absolute
+    right: 0
+    bottom: -15px
+
+[ng-cloak], .ng-cloak
+  display: none !important

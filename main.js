@@ -1,126 +1,105 @@
-'use-strict';
-
-const {app, BrowserWindow, ipcMain} = require('electron');
-const fs = require('fs');
-const i18n = require('i18n');
+var electron = require('electron');
+var app = electron.app,
+    ipcMain = electron.ipcMain,
+    BrowserWindow = electron.BrowserWindow;            
 
 console.log('Chrome version: ', process.versions.chrome);
 console.log('Electron version: ', process.versions.electron);
 
-let loadingWindow = null,
-    loginWindow = null,
+var loginWindow = null,
     mainWindow = null;
-let scr_width = 0,
-    scr_height = 0;
-let maximized = false;
 
-function loginScreen() {
-  loginWindow = new BrowserWindow({
-    width: 400,
-    height: 500,
-    resizable: false,
-    frame: false,
-    show: false
-  });
-
-  loginWindow.loadURL(`file://${__dirname}/build/html/login.html`);
-  loginWindow.on('close', () => {
-    loginWindow = null;
-  });
+function createLoginWindow() {
+    loginWindow = new BrowserWindow({
+        width: 400,
+        height: 500,
+        title: 'To do Manager',
+        resizable: false,
+        frame: false,
+        backgroundColor: '#666',
+        icon: electron.nativeImage.createFromPath('assets/todo_icon.png'),
+        webPreferences: {
+            devTools: true,
+            nodeIntegration: true
+        }
+    });
+    
+    loginWindow.loadURL(`file://${__dirname}/build/html/login.html`);
 }
 
-function mainScreen() {
-  mainWindow = new BrowserWindow({
-    width: 800,
-    height: 500,
-    userContentSize: true,
-    title: 'To do Manager',
-    resizable: false,
-    frame: false,
-    backgroundColor: '#666',
-    icon: 'assets/todo_icon.png',
-    webPreferences: {
-      devTools: true
-    }
-  });
-  let s = require('electron').screen;
-  let swh = s.getPrimaryDisplay().workAreaSize;
+function createMainWindow() {
+    mainWindow = new BrowserWindow({
+        width: 880 /*800*/,
+        height: 550 /*500*/,
+        title: 'To do Manager',
+        resizable: false,
+        frame: false,
+        backgroundColor: '#666',
+        icon: electron.nativeImage.createFromPath('assets/todo_icon.png'),
+        webPreferences: {
+            devTools: true,
+            nodeIntegration: true
+        }
+    });
 
-  scr_width = swh.width;
-  scr_height = swh.height;
-  x_center = (scr_width / 2) - 400;
-  y_center = (scr_height / 2) - 250;
-  mainWindow.loadURL(`file://${__dirname}/build/html/index.html`);
-
-  mainWindow.on('ready-to-show', () => {
-    init();
-  });
-  mainWindow.on('close', () => {
-    mainWindow = null;
-  });
+    var swh = electron.screen.getPrimaryDisplay().workAreaSize;
+    
+    scr_width = swh.width;
+    scr_height = swh.height;
+    x_center = (scr_width / 2) - 400;
+    y_center = (scr_height / 2) - 250;
+    mainWindow.loadURL(`file://${__dirname}/build/html/index.html`);
 }
 
-app.on('ready', () => {
-  loginScreen();
-  mainScreen();
-
-    /*loginWindow.webContents.on('did-finish-load', function() {
-      if(loadingWindow) {
-        loadingWindow.close();
-      }
-    });*/
-
-
-  mainWindow.hide();
-  loginWindow.show();
-
+app.on('ready', function() {
+    // createLoginWindow();
+    createMainWindow();
+    mainWindow.webContents.openDevTools();
 });
-/*
-function loadingScreen() {
-  loadingWindow = new BrowserWindow({
-    width: 500,
-    height: 250,
-    resizable: false,
-    frame: false,
-    backgroundColor: '#555'
-  });
-  loadingWindow.loadURL(`file://${__dirname}/public/html/loading.html`);
-  loadingWindow.show();
-}
-*/
 
+app.on('render-process-gone', renderLog);
+app.on('child-process-gone', childLog);
+app.on('gpu-process-crashed', gpuLog);
+
+function renderLog(event) {
+    console.log('RENDER', event)
+}
+
+function childLog(event) {
+    console.log('CHILD', event)
+}
+
+function gpuLog(event) {
+    console.log('GPU', event)
+}
 
 /*------------------ IPC -------------------*/
 
-ipcMain.on('username', (event, args) => {
-  loginWindow.hide();
-  mainWindow.webContents.send('user', args);
-  mainWindow.show();
-  console.log('Username',args);
+ipcMain.on('login', function(event, args) {
+    loginWindow.hide();
+    createMainWindow();
+
+    mainWindow.webContents.openDevTools();
 });
 
-ipcMain.on('logout', () => {
-  mainWindow.hide();
-  loginWindow.show();
+ipcMain.on('logout', function() {
+    mainWindow.destroy();
+    loginWindow.show();
 });
 
-ipcMain.on('minimize-window', () => {
+ipcMain.on('minimize', function() {
     mainWindow.minimize();
 });
-ipcMain.on('maximize-window', () => {
-  if(!maximized) {
-    mainWindow.setBounds({x: 0, y: 0, width: scr_width, height: scr_height});
-    maximized = true;
-  } else {
-    mainWindow.setBounds({x: x_center, y: y_center, width: 800, height: 500});
-    maximized = false;
-  }
-});
-ipcMain.on('close-window', () => {
-    app.quit();
+
+ipcMain.on('maximize', function() {
+    console.log('IS_MAXIMIZED', mainWindow.isMaximized());
+    if (!mainWindow.isMaximized()) {
+        mainWindow.maximize();
+    } else {
+        mainWindow.unMaximize();
+    }
 });
 
-
-function init() {
-
-}
+ipcMain.on('close', function() {
+    app.exit();
+});

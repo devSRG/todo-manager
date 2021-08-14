@@ -1,19 +1,18 @@
 {
     "env": {
         "browser": true,
-        "node": true,
-        "commonjs": true
+        "node": true
     },
     "extends": "eslint:recommended",
     "parserOptions": {
-        "ecmaVersion": 5
+        "ecmaVersion": 6
     },
     "globals": {
         "angular": false
     },
     "rules": {
         "indent": [
-            "error", "tab"
+            "error", 4
         ],
         "linebreak-style": [
             "error", "windows"
@@ -28,6 +27,7 @@
             "error", "all", {
                 "nestedBinaryExpressions": false
             }
-        ]
+        ],
+        "no-multiple-empty-lines": "error"
     }
 }

@@ -1,0 +1,29 @@
+.container(ng-controller="TodoController as td")
+  .top-header
+    .section-title
+      h3(ta-i18n="COMMON.todo") To do
+    ta-category-selector(ng-if="td.todos.length" 
+      categories="td.categories" 
+      default-category="all" 
+      max-display="3" 
+      on-toggle="td.toggleCategory(id)" 
+      styles="float: right")
+  div(ng-cloak)
+    .todo-list(ng-if="td.filteredTodos.length") 
+      ta-todo-item(ng-cloak
+                ng-repeat="todo in td.filteredTodos | filter : {completed: 0} track by todo.id"
+                ng-class="{'selected': todo.id == td.selectedTodo.id}"
+                todo="todo"
+                selected-task="td.selectedTodo.id"
+                category-color="td.getCategoryColor(todo.categoryId)"
+                on-toggle="td.toggle(id)"
+                on-remove="td.remove(id)"
+                on-edit="td.toggleModal(true)")
+    .center(ng-if="td.filteredTodos.length == 0")
+      p Nothing here!
+    .add-todo
+      button(ng-click="td.toggleModal()")
+        <svg width="10px" height="10px" viewbox="0 0 10 10">
+          <path d="M6 4L6 0L4 0L4 4L0 4L0 6L4 6L4 10L6 10L6 6L10 6L10 4L6 4Z" fill="#FFFFFF" fill-rule="evenodd" stroke="none" />
+        </svg>
+      

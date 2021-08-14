@@ -1,0 +1,29 @@
+block variables
+  - var controller = ''
+  - var cssClass = ''
+
+doctype html
+html
+  head
+    title To do Manager
+    meta(charset="utf-8")
+    block links
+      link(rel="stylesheet" href="../lib/angular-date-picker/angular-date-picker.css")
+    body(ng-app="todo-app" ng-controller=controller ng-class=cssClass)
+      include includes/titlebar
+      block content
+      script(src="../../src/app.module.js")
+      script(src="../../src/constants.js")
+      script(src="../../src/services/database.provider.js")
+      script(src="../../src/services/schema.provider.js")
+      script(src="../../src/services/orm.factory.js")
+      script(src="../../src/services/user-model.factory.js")
+      script(src="../../src/services/todo-model.factory.js")
+      script(src="../../src/services/category-model.factory.js")
+      script(src="../../src/services/file.factory.js")
+      script(src="../../src/services/ipc.factory.js")
+      script(src="../../src/services/utility.factory.js")
+      script(src="../../src/services/settings.service.js")
+      script(src="../../src/services/popup.service.js") 
+      script(src="../../src/directives/i18n.directive.js")
+      block scripts

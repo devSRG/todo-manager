@@ -1,93 +1,129 @@
-var util = require('../util'),
-	ipcRenderer = require('electron').ipcRenderer;
-
-var saveJSON = util.saveJSON,
-	readJSON = util.readJSON;
+var ipcRenderer = require('electron').ipcRenderer;
 
 angular
-	.module('todoLogin', ['app', 'ngAnimate'])
-	.controller('loginController', loginController);
+    .module('todo-app')
+    .controller('LoginController', LoginController);
 
-function loginController($rootScope, $scope) {
-	var vm = this;
-	
-	vm.heading = 'Log In';
-	vm.name = '';
-	vm.avatar = '';
-	vm.err = '';
-	vm.login = login;
-	vm.blur = onblur;
-	vm.register = register;
-	vm.checkUser = checkUser;
-	vm.toggleNew = toggleNew;
-	vm.users = [];
-	vm.user_avail = false;
-	vm.create_user_visible = false;
-	vm.login_btn_disabled = true;
-	vm.register_btn_disabled = false;
+function LoginController($rootScope, $scope, util, file, orm, ipc) {
+    var vm = this;
 
-	readJSON('./users.json', function(result) {
-		vm.users = result;
-	});
+    vm.name = '';
+    vm.avatar = null;
+    vm.notify = null;
+    vm.users = []; 
+    vm.userAvailable = false;
+    vm.showLogin = true;
+    vm.loginBtnDisabled = true;
+    vm.registerBtnDisabled = false;
+    vm.login = login;
+    vm.blur = onblur;
+    vm.register = register;
+    vm.checkUser = checkUser;
+    vm.toggleNew = toggleNew;
+    vm.updateAvatar = updateAvatar;
+    vm.onDragEnter = onDragEnter;
+    vm.onDragOver = onDragOver;
+    vm.onDrop = onDrop;
 
-	function login() {
-		if (vm.name != '') {
-			ipcRenderer.send('username', [vm.name, vm.avatar]);
+    $rootScope.mainWindowOnlyClose = true;
 
-			$rootScope.user = [vm.name, vm.avatar];
+    orm.User.getAll().then(function (data) {
+        vm.users = data;
+        console.log('Users:', data)
+    });
 
-			localStorage.setItem('username', vm.name);
-			localStorage.setItem('user_avatar', vm.avatar);
-		}
-	}
+    function login() {
+        if (vm.name != '') {
+            var user = vm.users.filter(function (user) { return user.name == vm.name; })[0];
 
-	function register() {
-		if (vm.name != '') {
-			vm.users.push({ 'name': vm.name, 'avatar': vm.avatar });
-			vm.name = '';
-			vm.notify = 'New user added!';
+            $rootScope.user = [vm.name, vm.avatar];
+            console.log('rootScope user', $rootScope.user, util.localStorage.get('user'))
+            util.localStorage.set('user', user);
+            ipc.send(ipc.cmd.LOGIN, [vm.name, vm.avatar]);
+        }
+    }
+
+    function register() {
+        if (vm.name != '') {
+            vm.users.push({ 'name': vm.name, 'avatar': vm.avatar });
+            vm.name = '';
+            vm.notify = 'New user added!';
 			
-			// eslint-disable-next-line no-console
-			console.log('Saving user!');
+            // eslint-disable-next-line no-console
+            console.log('Saving user!');
 
-			saveJSON('./users.json', vm.users);
-			saveJSON('./' + vm.name.toLowerCase() + '.todo.json', []);
-		}
-	}
+            orm.User.add(vm.name, vm.avatar);
+        }
+    }
 
-	// eslint-disable-next-line no-unused-vars
-	function checkUser(e) {
-		var keys = Object.keys(vm.users);
-		for (var i = 0; i < keys.length; i++) {
-			if (vm.users[keys[i]].name == vm.name) {
-				vm.avatar = vm.users[keys[i]].avatar;
-				vm.user_avail = true;
-			} else {
-				vm.avatar = '';
-				vm.user_avail = false;
-				vm.notify = '';
-			}
-			if (vm.user_avail) {
-				vm.login_btn_disabled = false;
-				vm.register_btn_disabled = true;
-				if (vm.create_user_visible) {
-					vm.notify = 'User exists!';
-				} else {
-					vm.notify = '';
-				}
-				break;
-			} else {
-				vm.login_btn_disabled = true;
-				vm.register_btn_disabled = false;
-			}
-		}
-	}
+    function checkUser() {
+        for (var i = 0; i < vm.users.length; i++) {
+            if (vm.users[i].name == vm.name) {
+                vm.avatar = vm.users[i].avatar;
+                vm.userAvailable = true;
+            } else {
+                vm.avatar = null;
+                vm.userAvailable = false;
+                vm.notify = null;
+            }
 
-	function toggleNew() {
-		vm.heading = vm.heading == 'Log In' ? 'Add User' : 'Log In';
-		vm.create_user_visible = !vm.create_user_visible;
-		vm.notify = '';
-	}
+            if (vm.userAvailable) {
+                vm.loginBtnDisabled = false;
+                vm.registerBtnDisabled = true;
+                vm.notify = !vm.showLogin ? 'User exists!': null;
+
+                break;
+            } else {
+                vm.loginBtnDisabled = true;
+                vm.registerBtnDisabled = false;
+                vm.notify = null;
+            }
+        }
+    }
+
+    window.test = function() {
+        vm.notify = "Testing";
+        $scope.$apply();
+
+        setTimeout(function() {
+            vm.notify = null;
+        }.bind(vm), 4000);
+    }
+
+    function toggleNew() {
+        vm.showLogin = !vm.showLogin;
+        vm.notify = null;
+    }
+
+    function updateAvatar() {
+
+    }
+
+    function onDragEnter(evt) {
+        var acceptedTypes = ['file'];
+        var acceptedMimes = ['image/jpeg', 'image/png', 'image/gif'];
+        var items = evt.dataTransfer.items;
+
+        if (items.length > 1) {
+            vm.notify = 'Drag only one image.'
+        } else {
+            if (acceptedTypes.indexOf(items[0].kind) != -1 && acceptedMimes.indexOf(items[0].type) != -1) {
+                evt.preventDefault();
+            }
+        }
+    }
+
+    function onDragOver(evt) {
+        evt.preventDefault();
+    }
+
+    function onDrop(evt) {
+        console.log('Drop', evt)
+        evt.preventDefault();
+        vm.notify = null;
+
+        evt.dataTransfer.items[0].getAsFile();
+    }
 }
 
-loginController.$inject = ['$rootScope', '$scope'];
+LoginController.$inject = ['$rootScope', '$scope', 'utility', 'file', 'orm', 'ipc'];

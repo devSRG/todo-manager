@@ -1,12 +1,48 @@
-doctype html
-html
-  head
-    include includes/head.pug
-  body(ng-app="todoApp")
-    - var only_close = false;
-    include includes/titlebar.pug
-    include includes/menu.pug
+extends layout
 
-    main(ng-controller="PageController as pg" ng-class="pg.fontsize")
-      div.pages(ng-repeat="item in pg.pages" ng-class="{'is-shown': item === pg.page()}" ng-include="item + '.html'")
-      div.alert-dialog(ng-if="pg.alert") {{ pg.msg }}
+block variables 
+ - var controller = "MainController as main"
+ - var cssClass = "main.fontSize"
+
+append links
+  link(rel="stylesheet" href="../css/dark-styles.css")
+
+append scripts
+  script(src="../../src/controllers/main.controller.js")
+  script(src="../../src/controllers/nav.controller.js")
+  script(src="../../src/controllers/page.controller.js")
+  script(src="../../src/controllers/dashboard.controller.js")
+  script(src="../../src/controllers/todo.controller.js")
+  script(src="../../src/controllers/add-todo.controller.js")
+  script(src="../../src/controllers/settings.controller.js")
+  script(src="../../src/directives/datepicker.directive.js")
+  script(src="../../src/components/dialog.component.js")
+  script(src="../../src/components/todo-item.component.js")
+  script(src="../../src/components/select.component.js")
+  script(src="../../src/components/category-selector.component.js")
+
+block content
+  -
+    var menus = [
+      {text: 'Dashboard', label: 'MENU.dashboard', page: 'dashboard'},
+      {text: 'To do', label: 'MENU.todo', page: 'todo'},
+      {text: 'Archived', label: 'MENU.completed', page: ''},
+      {text: 'Categories', label: 'MENU.categories', page: ''},
+      {text: 'Settings', label: 'MENU.settings', page: 'settings'}
+    ];
+
+  aside(ng-controller="NavController as nav" ng-class="{'blur': main.blurBackground}")
+    .profile-info
+      .profile
+        div(ng-if="!nav.avatar") {{ nav.firstLetter }}
+        img(ng-if="nav.avatar" ng-src="{{ nav.avatar }}" ng-class="{'is-user': nav.userAvailable}")
+      span {{ nav.username }}
+    nav
+      ul
+        each item in menus
+          li
+            a(ng-class="{'selected': '" + item.page + "' ==  nav.currentPage}" href="#" ng-click="nav.updatePage('" + item.page + "')" ta-i18n=item.label) #{item.text}
+    button.logout(ng-click="nav.logOut()" ta-i18n="COMMON.logout") Log out
+  main(ng-controller="PageController as pg" ng-class="{'blur': main.blurBackground}")
+    .pages(ng-repeat="page in pg.pages" ng-class="{'is-shown': page === pg.currentPage}" ng-click="pg.updatePage(page)" ng-include="'partials/' + page + '.html'")
+  //- ta-dialog(title="main.dialogTitle" content="main.dialogContent" options="main.dialogOptions")

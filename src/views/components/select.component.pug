@@ -1,0 +1,5 @@
+.ta-select(ng-click="$ctrl.toggle()" ng-class="'id-' + $ctrl.id")
+  span {{ $ctrl.selected }}
+    .options(ng-show="$ctrl.expand")
+      ul
+        li(ng-repeat="option in $ctrl.options" ng-click="$ctrl.selectValue($event)" data-value="{{ option.value }}") {{ option.label }}

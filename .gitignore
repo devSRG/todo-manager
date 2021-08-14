@@ -1,5 +1,7 @@
 node_modules/
-public/
+build/
+.vscode/
+lib/
 
 src/img
 locales/*.json
@@ -7,7 +9,7 @@ locales/*.json
 
 *.sublime-project
 *.sublime-workspace
+*.code-workspace
+*.log
 
-*todo.json
-*users.json
-*.db
+todo

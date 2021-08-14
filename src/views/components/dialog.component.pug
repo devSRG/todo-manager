@@ -1,0 +1,18 @@
+.dialog(ng-if="$ctrl.showDialog")
+  div(style="height: 30px")
+    button.close-btn(ng-if="$ctrl.showClose || !$ctrl.buttons" ng-click="$ctrl.onClose()")
+      <svg width="9px" height="9px" viewbox="0 0 9 9">
+        <path d="M4.24263 2.82845L1.41418 0L-2.89679e-05 1.41421L2.82842 4.24266L0 7.07108L1.41421 8.48529L4.24263 5.65687L7.07104 8.48528L8.48525 7.07107L5.65684 4.24266L8.48528 1.41422L7.07107 7.62939e-06L4.24263 2.82845Z" fill="#AAAAAA" fill-rule="evenodd" stroke="none" />
+      </svg>
+    .clear-fix
+  .header
+    h3(ta-i18n="$ctrl.titleTranslationKey") {{ $ctrl.title }}
+  .content
+    .container(ng-include="$ctrl.content")
+  .footer
+    .btns
+      button(ng-if="$ctrl.buttons" ng-repeat="btn in $ctrl.buttons" ng-class="btn.class" ta-i18n="btn.translationKey" ng-click="btn.onClick($ctrl)") {{ btn.label }}
+      button.cancel(ng-if="!$ctrl.buttons" ng-click="$ctrl.onCancel()") Cancel
+      button.submit.primary(ng-if="!$ctrl.buttons" ng-click="$ctrl.onSubmit()") Ok
+    .clear-fix
+.overlay(ng-if="$ctrl.showDialog")

@@ -1,13 +1,13 @@
 angular
-	.module('CustomDatePicker', [])
-	.directive('TadatePicker', TadatePicker);
+    .module('CustomDatePicker', [])
+    .directive('TadatePicker', TadatePicker);
 
 function TadatePicker() {
-	var days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+    var days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 
-	return {
-		restrict: 'E',
-		template: '<table width="300" height="300">'+
+    return {
+        restrict: 'E',
+        template: '<table width="300" height="300">'+
 					'<thead>'+
 						'<td ng-repeat="day in days">{{ day }}</td>'+
 					'</thead>'+
@@ -17,9 +17,9 @@ function TadatePicker() {
 						'</tr>'+
 					'</tbody>'+
                   '</table>',
-		// eslint-disable-next-line no-unused-vars
-		link: function($scope, $element, $attrs) {
-			$scope.days = days;
-		}
-	};
+        // eslint-disable-next-line no-unused-vars
+        link: function($scope, $element, $attrs) {
+            $scope.days = days;
+        }
+    };
 }

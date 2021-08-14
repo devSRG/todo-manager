@@ -1,63 +1,45 @@
 angular
-	.module('todoApp')
-	.controller('SettingsController', SettingsController);
+    .module('todo-app')
+    .controller('SettingsController', SettingsController);
 
 function SettingsController($scope, settings) {
-	var vm = this;
+    var vm = this;
 
-	/*vm.keymaps = [
-		{
-			def: 'Close window',
-			com: 'Alt + F4'
-		},
-		{
-			def: 'Copy',
-			com: 'Alt + C'
-		}
-	];*/
-	/*vm.themes = [
-		{
-			name: 'light',
-			color: '#ededed'
-		},
-		{
-			name: 'dark',
-			color: '#444'
-		}
-	];*/
-	vm.keymaps = [];
-	vm.themes = [];
-	vm.locales = ['en-US', 'sl-LK'];
-	vm.locale = 'en-US';
-	vm.lang = settings.getconfLocale();
-	vm.font_sizes = ['Small', 'Medium', 'Large'];
-	vm.font_size  = settings.getFontSize();
-	vm.changeLang = changeLang;
-	vm.changeFontSize = changeFontSize;
-	vm.enable_maximize = settings.maximize;
-	vm.toggleMaximize = settings.toggleMaximize;
+    vm.keymaps = [
+        {
+            def: 'Close window',
+            com: 'Alt + F4'
+        },
+        {
+            def: 'Copy',
+            com: 'Alt + C'
+        }
+    ];
+    vm.locales = settings.getLocales();
+    vm.fontSizes = settings.getFontSizes();
+    vm.themes = settings.getThemes();
+    vm.locale = settings.getUserLocale();
+    vm.fontSize = settings.getUserFontSize();
+    vm.theme = settings.getUserTheme();
+    vm.setLocale = setLocale;
+    vm.setFontSize = setFontSize;
+    vm.setTheme = setTheme;
+    vm.enableMaximize = settings.maximize;
+    vm.toggleMaximize = settings.toggleMaximize;
 
-	$scope.$watch(function() {
-		vm.font_size = settings.getFontSize();
-	});
-	// eslint-disable-next-line no-console
-	console.log('DATA', vm.lang, vm.font_size);
+    function setLocale(locale) {
+        settings.setUserLocale(locale);
+    }
 
-	function changeLang(language) {
-		settings.setconfLocale(language);
-		settings.saveConfig();
-		
-		// eslint-disable-next-line no-console
-		console.log('language', language);
-	}
+    function setFontSize(size) {
+        settings.setUserFontSize(size);
+    }
 
-	function changeFontSize(size) {
-		settings.setFontSize(size);
-		settings.saveConfig();
+    function setTheme(theme) {
+        settings.setUserTheme(theme);
 
-		// eslint-disable-next-line no-console
-		console.log('font size', size);
-	}
+        vm.theme = settings.getUserTheme();
+    }
 }
 
-SettingsController.$inject = ['$scope','SettingsConfig'];
+SettingsController.$inject = ['$scope', 'settings'];

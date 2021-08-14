@@ -1,9 +1,16 @@
 #title-bar
-  if only_close
-    p {{ title }}
-    button.close(name="close" ng-click="close()")
-  else
-    p {{ title }}
-    button.close(name="close" ng-click="close()")
-    button.maximize(name="maximize" ng-click="maximize()" ng-disabled="maximize_enabled")
-    button.minimize(name="minimize" ng-click="minimize()")
+  .title
+    p To do Manager
+  .window-btns
+    button.minimize(ng-if="!mainWindowOnlyClose" ng-click="minimize()")
+      <svg width="10px" height="2px" viewbox="0 0 10 2" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg">
+        <path d="M0 0L10 0L10 2L0 2L0 0Z" id="minimize" fill="#AAAAAA" fill-rule="evenodd" stroke="none" />
+      </svg>
+    button.maximize(ng-if="!mainWindowOnlyClose" ng-click="maximize()" ng-disabled="!maximizeEnabled")
+      <svg width="10px" height="10px" viewbox="0 0 10 10" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg">
+        <path d="M10 0L0 0L0 10L10 10L10 0ZM8 2L2 2L2 7L8 7L8 2Z" id="maximize" fill="#AAAAAA" fill-rule="evenodd" stroke="none" />
+      </svg>
+    button.close(ng-click="close()")
+      <svg width="9px" height="9px" viewbox="0 0 9 9" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg">
+        <path d="M4.24263 2.82845L1.41418 0L-2.89679e-05 1.41421L2.82842 4.24266L0 7.07108L1.41421 8.48529L4.24263 5.65687L7.07104 8.48528L8.48525 7.07107L5.65684 4.24266L8.48528 1.41422L7.07107 7.62939e-06L4.24263 2.82845Z" id="Rectangle-Copy-Union" fill="#AAAAAA" fill-rule="evenodd" stroke="none" />
+      </svg>

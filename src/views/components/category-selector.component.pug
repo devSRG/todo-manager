@@ -1,0 +1,13 @@
+.category
+  span.category-type(ng-if="$ctrl.defaultCategory" ng-class="{active: !$ctrl.activeCategory}" ng-click="$ctrl.toggleCategory()") {{ $ctrl.defaultCategory }}
+  span.category-type(ng-repeat="category in $ctrl.visibleCategories track by category.id"
+    ng-class="[{active: $ctrl.activeCategory == category.type}, category.color]"
+    ng-click="$ctrl.toggleCategory(category.type, category.id)") {{ category.type }}
+  .more(ng-if="$ctrl.hiddenCategories.length" ng-click="$ctrl.showHiddenCategories()")
+    button {{ $ctrl.hiddenCategories.length + "+" }}
+    .hidden(ng-show="$ctrl.showHidden")
+      ul
+        li(ng-repeat="category in $ctrl.hiddenCategories track by category.id")
+          span.category-type(
+            ng-class="category.color"
+            ng-click="$ctrl.toggleCategory(category.type, category.id)") {{ category.type }}

@@ -1,0 +1,15 @@
+.container(ng-controller="DashboardController as dh")
+  h3 Dashboard
+  .card(ng-if="dh.totalTodos")
+    span {{ dh.totalTodos }}
+    span.caption Total
+  .card(ng-if="dh.totalActiveTodos")
+    span {{ dh.totalActiveTodos }}
+    span.caption Active
+  .card(ng-if="dh.totalCategories")
+    span {{ dh.totalCategories }}
+    span.caption Categories
+  h4 Active Todo
+  .todo-list(ng-if="dh.activeTodos.length")
+    ta-todo-item(ng-repeat="todo in dh.activeTodos track by todo.id"
+      todo="todo")

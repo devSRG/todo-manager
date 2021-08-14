@@ -1,0 +1,110 @@
+$primary: #ddd
+$primary-shade-lighter: lighten($primary, 5%)
+$primary-shade-darker: darken($primary, 5%)
+
+$accent: royalblue
+$accent-shade-lighter: lighten($accent, 5%)
+$accent-shade-darker: darken($accent, 5%)
+
+$primary-text: #444
+$primary-text-shade-lighter: lighten($primary-text, 5%)
+$primary-text-shade-darker: darken($primary-text, 5%)
+
+// $red: #e46060
+// $green: #7ee27e
+// $blue: #7676e2
+// $purple: #df69df
+// $yellow: #dbdb61
+$red: #eb4141
+$green: #55e055
+$blue: #5555df
+$purple: #db45db
+$yellow: #e4e443
+
+
+/* COMMON */
+
+$body-bg: #eee
+$overlay-bg: $primary
+$close-btn-text: #aaa
+$close-btn-hover-text: #eee
+$btn-bg: #aaa 
+$btn-text: #eee
+$btn-disabled: #888
+$btn-hover-bg: darken($btn-bg, 5%)
+$btn-hover-text: lighten($btn-text, 5%)
+$input-bg: $primary-shade-darker
+$input-text: $primary-text-shade-darker
+$input-border: darken($input-bg, 4%)
+$input-focus-bg: lighten($primary, 2%)
+$input-focus-border: darken($input-border, 2%)
+$select-bg: #d2d2d2
+$select-text: $primary-text-shade-darker
+$select-border: darken($select-bg, 8%)
+$select-dropdown-arrow: $primary-text
+$select-hover-bg: #adadad
+$select-focus-border: lighten($select-border, 4%)
+$select-shadow: #3e3e3e
+$dialog-bg: #eaeaea
+$dialog-text: #888
+$dialog-shadow: #c2c2c2
+$category-bg: #bbb
+$category-text: #666
+$category-hover-text: #fff
+$category-default-border: $category-bg
+$category-shadow: #ccc
+$kbd-bg: #ccc
+$scrollbar-thumb-bg: darken($body-bg, 10%)
+$scrollbar-thumb-border: $body-bg
+$scrollbar-corner-bg: $body-bg
+$datepicker-bg: #e2e2e2
+$datepicker-text: #373737
+$datepicker-border: #c6c6c6
+$datepicker-month-bg: #d0d0d0
+$datepicker-month-border: #c1c1c1
+$datepicker-day-hover-bg: #ccc
+$datepicker-today-border: #888
+
+
+/* LAYOUTS */
+
+$titlebar-bg: $primary
+$titlebar-text: $primary-text
+$titlebar-shadow: #ddd
+$titlebar-btn-bg: $titlebar-bg
+$titlebar-btn-text: #aaa
+$titlebar-btn-hover-bg: lighten($titlebar-btn-bg, 5%)
+
+$navbar-bg: $primary
+$navbar-border: darken($primary, 1%)
+$navbar-menuitem-bg: darken($primary, 1%)
+$navbar-menuitem-text: $primary-text-shade-darker
+$navbar-menuitem-border: darken($primary, 3%)
+$navbar-menuitem-hover-bg: lighten($primary, 1%)
+$navbar-menuitem-hover-text: $primary-text-shade-lighter
+$navbar-menuitem-selected-bg: lighten($primary, 3%)
+$navbar-menuitem-selected-text: $primary-text-shade-lighter
+
+$main-bg: #eee
+
+$todoitem-bg: #ddd
+$todoitem-hover-bg: #d4d4d4
+$todoitem-selected-bg: $todoitem-hover-bg
+$todoitem-text: #888
+$todoitem-default-border: $green
+$todoitem-btn-bg: #b7b7b7
+$todoitem-btn-hover-bg: #c2c2c2
+$todoitem-shadow: #c8c8c8
+
+$addtodo-btn-bg: $purple
+$addtodo-btn-hover-bg: lighten($purple, 5%)
+$addtodo-btn-shadow: #999
+$addtodo-btn-hover-shadow: #aaa
+
+.input-group.date
+  .icon
+    svg
+      path:first-child
+        fill: #969696
+      path:last-child
+        fill: #828282
