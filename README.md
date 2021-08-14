@@ -1,23 +1,20 @@
 # Todo Manager
 
-__Work In Progress__
+A desktop app for easy todo management developed using nodeJS, Electron and AngularJS. Using old school javascript and frameworks to stay in line with initial codes. This is being developed as a pet project so do not use for anything important. _Work In Progress_ (forever...)
 
-A desktop app for easy todo management developed using ElectronJS and AngularJS.
-
-![Todo Manager UI Mockup](assets/todo_app_UI_v2.jpeg)
-
-UI Mockup
+![Todo Manager UI](assets/todo_app_UI_v3.jpeg)
+UI based on updated _final_v1_ branch.
 
 ## Development
 
-1. Clone source files
+1. Clone source files.
 
     ``` git clone https://github.com/devsrg/todo-manager.git ```
 
-2. Install required dependencies
+2. Install required dependencies.
 
     ``` npm install ```
 
 ## LICENSE
 
-MIT &copy; DevSRG
+MIT &copy; devSRG
