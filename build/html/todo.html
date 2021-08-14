@@ -1,8 +1,0 @@
-
-<div class="container" ng-controller="TodoController as td">
-  <h3>To do</h3>
-  <div class="category"><span class="tag" ng-repeat="category in td.categories" ng-class="[{active: td.active_category == category.type}, {true: category.color}[true]]" ng-click="td.toggleCategory(category.type)">{{ category.type }}</span></div>
-  <div class="todo-list">
-    <todo-item ng-cloak="ng-cloak" ng-repeat="todo in td.todos | filter : {completed:false} track by todo.id" ng-class="{'selected': todo.id == td.selected_task}" todo="todo" selected-task="td.selected_task" on-toggle="td.toggle(id)" on-remove="td.remove(id)"></todo-item>
-  </div>
-</div>
