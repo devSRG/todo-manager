@@ -5,7 +5,7 @@ lib/
 
 src/img
 locales/*.json
-!locales/en-Us.json
+!locales/en-US.json
 
 *.sublime-project
 *.sublime-workspace
