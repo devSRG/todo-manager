@@ -8,7 +8,7 @@
       max-display="3" 
       on-toggle="td.toggleCategory(id)" 
       styles="float: right")
-  .section(ng-cloak)
+  div(ng-cloak)
     .todo-list(ng-if="td.filteredTodos.length") 
       ta-todo-item(ng-cloak
         ng-repeat="todo in td.filteredTodos | filter : {completed: 0} track by todo.id"
