@@ -18,11 +18,11 @@ function TodoController($rootScope, $scope, $document, util, orm, settings, popu
     vm.expand = false;
     vm.selectedTodo = null;
 
+    vm.edit = edit;
     vm.remove = remove;
-    vm.toggle = toggle;
     vm.toggleOptions = toggleOptions;
-    vm.completeTask = completeTask;
     vm.toggleModal = toggleModal;
+    vm.markComplete = markComplete;
     vm.toggleCategory = toggleCategory;
     vm.getCategoryColor = getCategoryColor;
 
@@ -51,6 +51,24 @@ function TodoController($rootScope, $scope, $document, util, orm, settings, popu
         });
     }
 
+    function edit(id) {
+        vm.selectedTodo = findTodo(id);
+
+        toggleModal(true);
+    }
+
+    function remove(id) {
+        orm.Todo.remove(id).then(function () {
+            vm.todos.splice(vm.todos.indexOf(findTodo(id)), 1);
+        });
+    }
+
+    function markComplete(id) {
+        orm.Todo.markComplete(id, true).then(function () {
+            updateTodoList();
+        });
+    }
+
     function toggleCategory(id) {
         if (id) {
             vm.filteredTodos = vm.todos.filter(function(todo) {
@@ -74,18 +92,6 @@ function TodoController($rootScope, $scope, $document, util, orm, settings, popu
         }
 
         return color;
-    }
-
-    function remove(id) {
-        // vm.todos.splice(findTodo(id), 1);
-    }
-
-    function completeTask(id) {
-        
-    }
-
-    function toggle(id) {
-        vm.selectedTodo = findTodo(id);
     }
 
     function toggleOptions() {

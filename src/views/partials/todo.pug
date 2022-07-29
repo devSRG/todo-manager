@@ -8,17 +8,18 @@
       max-display="3" 
       on-toggle="td.toggleCategory(id)" 
       styles="float: right")
-  div(ng-cloak)
+  .section(ng-cloak)
     .todo-list(ng-if="td.filteredTodos.length") 
       ta-todo-item(ng-cloak
-                ng-repeat="todo in td.filteredTodos | filter : {completed: 0} track by todo.id"
-                ng-class="{'selected': todo.id == td.selectedTodo.id}"
-                todo="todo"
-                selected-task="td.selectedTodo.id"
-                category-color="td.getCategoryColor(todo.categoryId)"
-                on-toggle="td.toggle(id)"
-                on-remove="td.remove(id)"
-                on-edit="td.toggleModal(true)")
+        ng-repeat="todo in td.filteredTodos | filter : {completed: 0} track by todo.id"
+        ng-class="{'selected': todo.id == td.selectedTodo.id}"
+        todo="todo"
+        category-color="td.getCategoryColor(todo.categoryId)"
+        show-edit="true"
+        show-mark-complete="true"
+        on-edit="td.edit(id)"
+        on-mark-complete="td.markComplete(id)"
+        on-remove="td.remove(id)")
     .center(ng-if="td.filteredTodos.length == 0")
       p Nothing here!
     .add-todo

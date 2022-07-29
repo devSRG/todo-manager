@@ -1,15 +1,16 @@
-.list(ng-cloak ng-click="$ctrl.toggle($ctrl.todo.id)" ng-class="$ctrl.categoryColor")
+.todo(ng-cloak ng-class="$ctrl.categoryColor")
   .row
-    div.left
-      span.tag.dur-todo(ng-if="false" title="Duration") {{ $ctrl.duration }}
-    div.right
-      div.close-btn(ng-click="$ctrl.emitRemove($ctrl.todo.id)")
-        <svg width="9px" height="9px" viewbox="0 0 9 9" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg">
-          <path d="M4.24263 2.82845L1.41418 0L-2.89679e-05 1.41421L2.82842 4.24266L0 7.07108L1.41421 8.48529L4.24263 5.65687L7.07104 8.48528L8.48525 7.07107L5.65684 4.24266L8.48528 1.41422L7.07107 7.62939e-06L4.24263 2.82845Z" id="Rectangle-Copy-Union" fill="#AAAAAA" fill-rule="evenodd" stroke="none" />
-        </svg>
+    .left
+      span.tag.dur-todo(ng-if="$ctrl.todo.duration" title="Duration") {{ $ctrl.todo.duration }}
+    .right
+      .btn.edit(ng-if="$ctrl.showEdit" ng-click="$ctrl.edit($ctrl.todo.id)" ta-i18n-title="COMMON.edit" title="Edit")
+        include ../../../assets/edit-todo-icon.svg
+      .btn.re-use(ng-if="$ctrl.showReUse" ng-click="$ctrl.reUse($ctrl.todo.id)" ta-i18n-title="TODO.reuse" title="Re-use")
+        include ../../../assets/todo-icon.svg
+      .btn.mark-complete(ng-if="$ctrl.showMarkComplete" ng-click="$ctrl.markComplete($ctrl.todo.id)" ta-i18n-title="TODO.mark-complete" title="Mark complete")
+        include ../../../assets/mark-complete-icon.svg
+      .btn.delete(ng-if="!$ctrl.showDelete" ng-class="{'confirm': $ctrl.removeConfirmPending}" ng-click="$ctrl.remove($ctrl.todo.id, $event)" ta-i18n-title="COMMON.delete" title="Delete")
+        include ../../../assets/trash-icon.svg
   .row
     p.title {{ $ctrl.todo.title }}
     p.desc(ng-if="$ctrl.todo.description") {{ $ctrl.todo.description }}
-  .row
-    button.todo-edit(ng-show="$ctrl.selectedTask == $ctrl.todo.id" ta-i18n="TODO.edit" ng-click="$ctrl.editTodo($ctrl.todo.id)") Edit
-    button.todo-edit(ng-show="$ctrl.selectedTask == $ctrl.todo.id" ta-i18n="TODO.mark-complete") Mark complete

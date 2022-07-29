@@ -5,34 +5,56 @@ angular
         controller: TodoItemController,
         bindings: {
             todo: '<',
-            selectedTask: '<',
             categoryColor: '<',
-            onToggle: '&',
+            showEdit: '<',
+            showReUse: '<',
+            showMarkComplete: '<',
+            showDelete: '<',
             onEdit: '&',
+            onReUse: '&',
+            onMarkComplete: '&',
             onRemove: '&'
         }
     });
 
-
-function TodoItemController() {
+function TodoItemController($timeout) {
     var vm = this;
 
-    vm.duration = 1;
+    vm.duration = null;
     vm.categoryColor = '#' + vm.categoryColor;
+    vm.removeConfirmPending = false;
+    vm.edit = edit;
+    vm.reUse = reUse;
+    vm.markComplete = markComplete;
+    vm.remove = remove;
 
-    vm.emitRemove = emitRemove;
-    vm.toggle = toggle;
-    vm.editTodo = editTodo;
 
-    function emitRemove(id) {
-        vm.onRemove({id: id});
-    }
-
-    function toggle(id) {
-        vm.onToggle({id: id});
-    }
-
-    function editTodo(id) {
+    function edit(id) {
         vm.onEdit({id: id});
     }
+
+    function reUse(id) {
+        vm.onReUse({id: id});
+    }
+
+    function markComplete(id) {
+        vm.onMarkComplete({id: id});
+    }
+
+    function remove(id, event) {
+        event.stopImmediatePropagation();
+
+        if (vm.removeConfirmPending) {
+            vm.onRemove({id: id});
+            vm.removeConfirmPending = false;
+        } else {
+            vm.removeConfirmPending = true;
+
+            $timeout(function () {
+                vm.removeConfirmPending = false;
+            }, 2000);
+        }
+    }
 }
+
+TodoItemController.$inject = ['$timeout'];
