@@ -2,7 +2,7 @@ angular
     .module('todo-app')
     .factory('popup', popup);
 
-function popup($rootScope, $compile, $document) {
+function popup($rootScope, $compile, $document, $timeout) {
     var TYPE = {
         DIALOG: 0,
         TOAST: 1
@@ -51,8 +51,19 @@ function popup($rootScope, $compile, $document) {
     }
 
     function showToast(message, options) {
+        var compiled;
+        var template = '<div class="toast">' + message + '</div>';
 
+        compiled = $compile(template)($rootScope);
+
+        $document.eq(0).find('main').after(compiled);
+
+        $timeout(function () {
+            angular.element(compiled).remove();
+        }, options && options.dur ? options.dur: 2000);
+
+        toast.push(compiled);
     }
 }
 
-popup.$inject = ['$rootScope', '$compile', '$document'];
+popup.$inject = ['$rootScope', '$compile', '$document', '$timeout'];

@@ -110,6 +110,7 @@ function TodoController($rootScope, $scope, $document, util, orm, settings, popu
                     onClick: function (ctrl) {
                         ctrl.onSubmit();
                         updateTodoList();
+                        popup.showToast('Success');
                     }
                 }
             ]
