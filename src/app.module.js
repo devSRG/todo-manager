@@ -2,8 +2,6 @@ require('angular');
 require('angular-animate');
 require('angular-date-picker');
 
-var i18n = require('i18n');
-
 angular
     .module('todo-app', ['ngAnimate', 'mp.datePicker'])
     .config(['databaseProvider', 'schemaProvider', function (database, schema) {
@@ -12,19 +10,19 @@ angular
     }])
     .run(Initialize);
 
-function Initialize($rootScope, settings, ipc, constants) {
+function Initialize($rootScope, settings, ipc, constants, i18n) {
+    $rootScope.mainWindowOnlyClose = constants.CONFIG.MAIN_WINDOW_ONLY_CLOSE;
+    $rootScope.maximizeEnabled = constants.CONFIG.MAXIMIZE_ENABLED;
     $rootScope.close = close;
     $rootScope.minimize = minimize;
     $rootScope.maximize = maximize;
-    $rootScope.mainWindowOnlyClose = constants.CONFIG.MAINWINDOW_ONLY_CLOSE;
-    $rootScope.maximizeEnabled = constants.CONFIG.MAXIMIZE_ENABLED;
-    $rootScope.user = null;
 
     var locales = settings.getLocales();
     var i18nOpts = {
         defaultLocale: locales[0].value,
         locales: locales.map(function (locale) { return locale.value; }),
         directory: './locales',
+        syncFiles: true,
         objectNotation: true
     };
 
@@ -49,4 +47,4 @@ function Initialize($rootScope, settings, ipc, constants) {
     }
 }
 
-Initialize.$inject = ['$rootScope', 'settings', 'ipc', 'constants'];
+Initialize.$inject = ['$rootScope', 'settings', 'ipc', 'constants', 'i18n'];

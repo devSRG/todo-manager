@@ -2,7 +2,7 @@ angular
     .module('todo-app')
     .controller('TodoController', TodoController);
 
-function TodoController($scope, orm, popup) {
+function TodoController($scope, orm, popup, i18n) {
     var vm = this;
 
     vm.todos = [];
@@ -85,14 +85,14 @@ function TodoController($scope, orm, popup) {
             showButtons: true,
             buttons: [
                 {
-                    label: 'Cancel',
+                    label: i18n.translate('COMMON.cancel', 'Cancel'),
                     class: 'cancel',
                     onClick: function (ctrl) {
                         ctrl.onCancel();
                     }
                 },
                 {
-                    label: edit ? 'Update': 'Add',
+                    label: edit ? i18n.translate('COMMON.update', 'Update'): i18n.translate('COMMON.add', 'Add'),
                     class: 'primary',
                     onClick: function (ctrl) {
                         ctrl.onSubmit();
@@ -103,11 +103,7 @@ function TodoController($scope, orm, popup) {
             ]
         };
 
-        if (edit) {
-            popup.openDialog('Update Todo', 'partials/todo_form.html', options, $scope, vm.selectedTodo);
-        } else {
-            popup.openDialog('Add Todo', 'partials/todo_form.html', Object.assign(options, {showClose: true}), $scope);
-        }
+        popup.openDialog(edit ? i18n.translate('TODO.update-todo', 'Update Todo'): i18n.translate('TODO.add-todo', 'Add Todo'), 'partials/todo_form.html', options, $scope, vm.selectedTodo);
     }
 
     function findTodo(id) {
@@ -121,4 +117,4 @@ function TodoController($scope, orm, popup) {
     }
 }
 
-TodoController.$inject = ['$scope', 'orm', 'popup'];
+TodoController.$inject = ['$scope', 'orm', 'popup', 'i18n'];

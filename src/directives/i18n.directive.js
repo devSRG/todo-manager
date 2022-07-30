@@ -1,30 +1,34 @@
-var i18n = require('i18n');
-
 angular
     .module('todo-app')
     .directive('taI18n', taI18n)
-    .directive('taI18nPlaceholder', taI18n);
+    .directive('taI18nPlaceholder', taI18n)
+    .directive('taI18nTitle', taI18n);
 
-function taI18n($rootScope, constants) {
+function taI18n($rootScope, constants, i18n) {
     return {
         restrict: 'A',
         link: function(scope, element, attrs) {
-            var label = attrs.taI18n;
-            var placeholderLable = attrs.taI18nPlaceholder;
-
             function updateTranslation() {
-                var translation;
+                var attributeType = null;
+                var key = null;
+                var translation = null;
 
-                if (placeholderLable) {
-                    translation = i18n.__(placeholderLable);
-
-                    if (translation.indexOf('.') == -1) {
-                        element.attr('placeholder', translation);
-                    }
+                if (attrs.taI18nTitle) {
+                    attributeType = 'title';
+                    key = attrs.taI18nTitle;
+                } else if (attrs.taI18nPlaceholder) {
+                    attributeType = 'placeholder';
+                    key = attrs.taI18nPlaceholder;
                 } else {
-                    translation = i18n.__(label);
+                    key = attrs.taI18n;
+                }
 
-                    if (translation.indexOf('.') == -1) {
+                translation = i18n.translate(key);
+
+                if (translation) {
+                    if (attributeType) {
+                        element.attr(attributeType, translation);
+                    } else {
                         element.text(translation);
                     }
                 }
@@ -37,4 +41,4 @@ function taI18n($rootScope, constants) {
     };
 }
 
-taI18n.$inject = ['$rootScope', 'constants'];
+taI18n.$inject = ['$rootScope', 'constants', 'i18n'];
