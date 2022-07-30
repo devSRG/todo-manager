@@ -4,7 +4,7 @@ angular
         templateUrl: '../html/components/dialog.component.html',
         controller: DialogController,
         bindings: {
-            title: '@',
+            heading: '@',
             content: '@'
         }
     });
@@ -12,16 +12,18 @@ angular
 function DialogController($scope, popup) {
     var vm = this;
     var dialog;
+    var dialogOptions = {
+        content: null,
+        headingTranslationKey: "",
+        showClose: true,
+        onClose: null
+    };
 
-    vm.title = null;
-    vm.titleTranslationKey = null;
+    vm.heading = null;
     vm.content = null;
     vm.data = null;
     vm.options = null;
     vm.showDialog = false;
-    vm.showButtons = false;
-    vm.showClose = true;
-    vm.buttons = null;
     vm.button = {
         onSubmit: null,
         onCancel: null
@@ -39,12 +41,9 @@ function DialogController($scope, popup) {
     function $onInit() {
         dialog = popup.getDialog();
 
-        vm.showDialog = !!(vm.title || vm.content);
+        vm.showDialog = !!(vm.heading || vm.content);
         vm.data = dialog.data;
-        vm.options = dialog.options;
-        vm.showButtons = vm.options.showButtons;
-        vm.showClose = vm.options.showClose;
-        vm.buttons = vm.options.buttons;
+        vm.options = Object.assign(dialogOptions, dialog.options);
     }
 
     function onCancel() {
@@ -69,7 +68,7 @@ function DialogController($scope, popup) {
         vm.showDialog = false;
 
         if (vm.options && angular.isFunction(vm.options.closeCb)) {
-            vm.options.closeCb();
+            vm.options.onClose();
         }
 
         popup.closeDialog.apply(dialog);
