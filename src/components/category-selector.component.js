@@ -17,6 +17,7 @@ function CategoryController($rootScope, $scope, $document, util) {
 
     vm.visibleCategories = [];
     vm.hiddenCategories = [];
+    vm.activeCategoryId = null;
     vm.activeCategory = null;
     vm.showHidden = false;
 
@@ -46,45 +47,40 @@ function CategoryController($rootScope, $scope, $document, util) {
             }
 
             if (vm.selected) {
-                toggleCategory(null, vm.selected);
+                toggleCategory(vm.selected);
             }
         }
     }
 
     function toggleCategory(id) {
         function checkHiddenCategories() {
-            var categoryIndex;
-            var category = vm.hiddenCategories.find(function (category, index) {
-                if (category.id == id) {
-                    categoryIndex = index;
-                    vm.activeCategory = category.id;
-
-                    return true;
-                } else {
-                    vm.activeCategory = null;
-                    
-                    return false;
-                }
+            var category = vm.hiddenCategories.find(function (cat) {
+                return cat.id == id;
             });
 
-            if (categoryIndex != undefined) {
-                vm.hiddenCategories.splice(categoryIndex, 1);
+            if (category) {
+                vm.hiddenCategories.splice(vm.hiddenCategories.indexOf(category), 1);
                 vm.hiddenCategories.push(vm.visibleCategories.pop());
                 vm.visibleCategories.push(category);
+
+                vm.activeCategoryId = category.id;
+                vm.activeCategory = category.type;
             }
         }
 
-        if (id && vm.hiddenCategories.length) {
-            checkHiddenCategories();
-        } else if (id) {
-            vm.activeCategory = vm.visibleCategories.find(function (cat) {
+        if (id && id !== vm.activeCategoryId) {
+            var category = vm.visibleCategories.find(function (cat) {
                 return cat.id == id;
-            }).type;
+            });
 
-            if (!vm.activeCategory) {
+            if (category) {
+                vm.activeCategoryId = category.id;
+                vm.activeCategory = category.type;
+            } else {
                 checkHiddenCategories();
             }
         } else {
+            vm.activeCategoryId = null;
             vm.activeCategory = null;
         }
 

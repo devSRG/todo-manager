@@ -8,6 +8,7 @@ function TodoController($scope, orm, popup, i18n) {
     vm.todos = [];
     vm.filteredTodos = [];
     vm.categories = [];
+    vm.activeCategoryId = null;
     vm.selectedTodo = null;
 
     vm.edit = edit;
@@ -55,12 +56,14 @@ function TodoController($scope, orm, popup, i18n) {
     }
 
     function toggleCategory(id) {
-        if (id) {
-            vm.filteredTodos = vm.todos.filter(function(todo) {
+        if (id && id !== vm.activeCategoryId) {
+            vm.filteredTodos = vm.todos.filter(function (todo) {
                 return todo.categoryId == id;
             });
+            vm.activeCategoryId = id;
         } else {
             vm.filteredTodos = vm.todos;
+            vm.activeCategoryId = null;
         }
     }
 
