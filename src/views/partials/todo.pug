@@ -23,8 +23,7 @@
     .center(ng-if="td.filteredTodos.length == 0")
       p Nothing here!
     .add-todo
-      button(ng-click="td.toggleModal()")
+      button(ng-click="td.openDialog()")
         <svg width="10px" height="10px" viewbox="0 0 10 10">
           <path d="M6 4L6 0L4 0L4 4L0 4L0 6L4 6L4 10L6 10L6 6L10 6L10 4L6 4Z" fill="#FFFFFF" fill-rule="evenodd" stroke="none" />
         </svg>
-      

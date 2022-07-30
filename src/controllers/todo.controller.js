@@ -1,6 +1,3 @@
-var fs = require('fs');
-const { util } = require('webpack');
-
 angular
     .module('todo-app')
     .controller('TodoController', TodoController);
@@ -15,8 +12,8 @@ function TodoController($scope, orm, popup) {
 
     vm.edit = edit;
     vm.remove = remove;
-    vm.toggleModal = toggleModal;
     vm.markComplete = markComplete;
+    vm.openDialog = openDialog;
     vm.toggleCategory = toggleCategory;
     vm.getCategoryColor = getCategoryColor;
 
@@ -42,7 +39,7 @@ function TodoController($scope, orm, popup) {
     function edit(id) {
         vm.selectedTodo = findTodo(id);
 
-        toggleModal(true);
+        openDialog(true);
     }
 
     function remove(id) {
@@ -82,7 +79,7 @@ function TodoController($scope, orm, popup) {
         return color;
     }
 
-    function toggleModal(edit) {
+    function openDialog(edit) {
         var options = {
             showClose: false, 
             showButtons: true,
