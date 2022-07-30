@@ -5,22 +5,16 @@ angular
     .module('todo-app')
     .controller('TodoController', TodoController);
 
-function TodoController($rootScope, $scope, $document, util, orm, settings, popup) {
+function TodoController($scope, orm, popup) {
     var vm = this;
 
     vm.todos = [];
     vm.filteredTodos = [];
     vm.categories = [];
-    vm.complete = false; 
-    vm.editEnabled = false;
-    vm.formFocused = false;
-    vm.formFocus = false;
-    vm.expand = false;
     vm.selectedTodo = null;
 
     vm.edit = edit;
     vm.remove = remove;
-    vm.toggleOptions = toggleOptions;
     vm.toggleModal = toggleModal;
     vm.markComplete = markComplete;
     vm.toggleCategory = toggleCategory;
@@ -31,12 +25,6 @@ function TodoController($rootScope, $scope, $document, util, orm, settings, popu
 
     updateCategoryList();
     updateTodoList();
-
-    // $document.on('click', function () {
-    //     if (vm.selectedTodo != null) {
-    //         vm.selectedTodo = null;
-    //     }
-    // });
 
     function updateCategoryList() {
         orm.Category.getAll().then(function (data) {        
@@ -94,10 +82,6 @@ function TodoController($rootScope, $scope, $document, util, orm, settings, popu
         return color;
     }
 
-    function toggleOptions() {
-        vm.expand = vm.expand ? false : true;
-    }
-
     function toggleModal(edit) {
         var options = {
             showClose: false, 
@@ -140,4 +124,4 @@ function TodoController($rootScope, $scope, $document, util, orm, settings, popu
     }
 }
 
-TodoController.$inject = ['$rootScope', '$scope', '$document', 'utility', 'orm', 'settings', 'popup'];
+TodoController.$inject = ['$scope', 'orm', 'popup'];
