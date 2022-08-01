@@ -5,7 +5,6 @@ angular
     .service('settings', settings);
 
 function settings($rootScope, util, database, constants) {
-    this.page = 'todo';
     this.strings = {};
     this.config = {};
     this.todos = [];
@@ -62,8 +61,6 @@ function settings($rootScope, util, database, constants) {
     this.setUserFontSize = setUserFontSize;
     this.getUserTheme = getUserTheme;
     this.setUserTheme = setUserTheme;
-    this.getPage = getPage;
-    this.setPage = setPage;
     this.getLocales = getLocales;
     this.getFontSizes = getFontSizes;
     this.getThemes = getThemes;
@@ -143,13 +140,7 @@ function settings($rootScope, util, database, constants) {
         $rootScope.$broadcast(constants.EVENT.THEME_UPDATED);
     }
 
-    function getPage() {
-        return this.page;
-    }
 
-    function setPage(current_page) {
-        this.page = current_page;
-    }
 
     function getLocales() {
         return this.settings.locales;

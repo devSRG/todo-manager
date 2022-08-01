@@ -5,8 +5,7 @@ angular
 function PageController($rootScope) {
     var vm = this;
 
-    vm.pages = ['dashboard', 'todo', /*'todo_form', 'completed',*/ 'settings'];
-    vm.currentPage = vm.pages[0];
+    vm.currentPage = $rootScope.currentPage;
 
     $rootScope.$watch(function () {
         return $rootScope.currentPage;

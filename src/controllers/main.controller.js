@@ -8,7 +8,7 @@ function MainController($rootScope, $scope, $document, settings, constants) {
     $rootScope.blurBackground = false;
     $rootScope.showOverlay = false;
     $rootScope.showAlert = false;
-    $rootScope.currentPage = null;
+    $rootScope.currentPage = 'todo';
     $rootScope.updatePage = updatePage;
 
     vm.blurBackground = $rootScope.blurBackground;

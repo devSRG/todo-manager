@@ -23,12 +23,11 @@ append scripts
 
 block content
   -
-    var menus = [
-      {text: 'Dashboard', label: 'MENU.dashboard', page: 'dashboard'},
-      {text: 'To do', label: 'MENU.todo', page: 'todo'},
-      {text: 'Archived', label: 'MENU.completed', page: ''},
-      {text: 'Categories', label: 'MENU.categories', page: ''},
-      {text: 'Settings', label: 'MENU.settings', page: 'settings'}
+    var menu = [
+      //- {text: 'Dashboard', label: 'MENU.dashboard', page: 'dashboard'},
+      {text: 'To do', 'label': 'MENU.todo', page: 'todo'},
+      {text: 'Completed', 'label': 'MENU.completed', page: 'completed'},
+      {text: 'Settings', 'label': 'MENU.settings', page: 'settings'}
     ];
 
   aside(ng-controller="NavController as nav" ng-class="{'blur': main.blurBackground}")
@@ -39,10 +38,10 @@ block content
       span {{ nav.username }}
     nav
       ul
-        each item in menus
+        each item in menu
           li
-            a(ng-class="{'selected': '" + item.page + "' ==  nav.currentPage}" href="#" ng-click="nav.updatePage('" + item.page + "')" ta-i18n=item.label) #{item.text}
+            a(ng-class="{'selected': '" + item.page + "' === nav.currentPage}" href="#" ng-click="nav.updatePage('" + item.page + "')" ta-i18n=item.label)= item.text
     button.logout(ng-click="nav.logOut()" ta-i18n="COMMON.logout") Log out
   main(ng-controller="PageController as pg" ng-class="{'blur': main.blurBackground}")
-    .pages(ng-repeat="page in pg.pages" ng-class="{'is-shown': page === pg.currentPage}" ng-click="pg.updatePage(page)" ng-include="'partials/' + page + '.html'")
-  //- ta-dialog(title="main.dialogTitle" content="main.dialogContent" options="main.dialogOptions")
+    each item in menu
+      .pages(ng-class="[{'is-shown': '" + item.page + "' === pg.currentPage}, '" + item.page + "-page']" ng-include="'partials/" + item.page + ".html'")
