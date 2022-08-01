@@ -8,7 +8,7 @@
       max-display="3" 
       on-toggle="td.toggleCategory(id)" 
       styles="float: right")
-  div(ng-cloak)
+  .section(ng-cloak)
     .todo-list(ng-if="td.filteredTodos.length") 
       ta-todo-item(ng-cloak
         ng-repeat="todo in td.filteredTodos | filter : {completed: 0} track by todo.id"
@@ -20,8 +20,9 @@
         on-edit="td.edit(id)"
         on-mark-complete="td.markComplete(id)"
         on-remove="td.remove(id)")
-    .center(ng-if="td.filteredTodos.length == 0")
-      p Nothing here!
+    .empty-todo.center(ng-if="td.filteredTodos.length == 0")
+      include ../../../assets/empty-todo.svg
+      p Start by creating new todos!
     .add-todo
       button(ng-click="td.openDialog()")
         <svg width="10px" height="10px" viewbox="0 0 10 10">
