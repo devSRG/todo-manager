@@ -8,13 +8,13 @@ function category(util, database) {
 
     return {
         get: get,
-        getAll: getAll,
-        count: count
+        count: count,
+        getAll: getAll
     };
 
     function get(type) {
-        if (user) {
-            return util.defer(function (deferred) {
+        return util.defer(function (deferred) {
+            if (user) {
                 db.get('SELECT id, type, color FROM category WHERE type = ? AND userId = ?', [type, user.id], function (err, row) {
                     if (err) {
                         deferred.reject(err)
@@ -22,31 +22,13 @@ function category(util, database) {
 
                     deferred.resolve(row);
                 });
-            });
-        } else {
-            return null;
-        }
-    }
-
-    function getAll() {
-        if (user) {
-            return util.defer(function (deferred) {
-                db.all('SELECT id, type, color FROM category WHERE userId = ?', [user.id], function (err, rows) {
-                    if (err) {
-                        deferred.reject(err);
-                    }
-
-                    deferred.resolve(rows);
-                });
-            });
-        } else {
-            return null;
-        }
+            }
+        });
     }
 
     function count() {
-        if (user) {
-            return util.defer(function (deferred) {
+        return util.defer(function (deferred) {
+            if (user) {
                 db.get('SELECT COUNT(id) AS count FROM category WHERE userId = ?', [user.id], function (err, row) {
                     if (err) {
                         deferred.reject(err);
@@ -54,8 +36,22 @@ function category(util, database) {
 
                     deferred.resolve(row);
                 });
-            });
-        }
+            }
+        });
+    }
+
+    function getAll() {
+        return util.defer(function (deferred) {
+            if (user) {
+                db.all('SELECT id, type, color FROM category WHERE userId = ?', [user.id], function (err, rows) {
+                    if (err) {
+                        deferred.reject(err);
+                    }
+
+                    deferred.resolve(rows);
+                });
+            }
+        });
     }
 }
 
