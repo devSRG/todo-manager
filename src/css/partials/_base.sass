@@ -1,12 +1,12 @@
 ::-webkit-scrollbar
-  width: 20px
+  width: 16px
+  height: 16px
 
 ::-webkit-scrollbar-thumb
   background: $scrollbar-thumb-bg
-  border: 6px solid $scrollbar-thumb-border
-  border-top: 0
-  border-bottom: 0
-  border-radius: 8px
+  background-clip: content-box
+  border: 5px solid transparent
+  border-radius: 10px
 
 ::-webkit-scrollbar-corner
   background: $scrollbar-corner-bg
@@ -27,16 +27,16 @@ h1, h2, h3, h4, h5, h6
   margin-top: 0
 
 h1
-  font-size: 1.8em
+  font-size: 1.8rem
 
 h2
-  font-size: 1.6em
+  font-size: 1.6rem
 
 h3
-  font-size: 1.4em
+  font-size: 1.4rem
 
 h4
-  font-size: 1.2em
+  font-size: 1.2rem
 
 a
   color: $primary-text
@@ -92,18 +92,25 @@ input:not([type=checkbox]), textarea
   background: $input-bg
   border: 1px solid $input-border
   border-radius: 2px
+  font-family: 'Open Sans', sans-serif
   padding: 6px 8px
   box-sizing: border-box
   transition: all 0.2s ease
 
   &:focus
-    outline: none
     background: $input-focus-bg
     border-color: $input-focus-border
+    outline: none
 
 textarea
-  font-family: 'Open Sans', sans-serif
+  border-radius: 0 // text becomes fuzzy if there's a border radius (>1)
   resize: none
+
+  /*&::-webkit-scrollbar
+    height: 14px
+    width: 14px*/
+
+  /*&::-webkit-scrollbar-thumb*/    
 
 input[type=checkbox]
   appearance: none
@@ -131,11 +138,11 @@ button
   background: $btn-bg
   padding: 8px 20px
   border: 0
-  border-radius: 4px
+  border-radius: 20px
   outline: none
   outline: 0
   cursor: default
-  transition: all 0.2s ease
+  transition: background 0.2s ease
 
   &:disabled
     background: $btn-disabled
@@ -171,23 +178,25 @@ button
   display: inline-block
   margin: 1px
   position: absolute
-  right: 0
+  right: 1px
 
   button
     display: inline-block
     background: $titlebar-btn-bg
     color: $titlebar-btn-text
-    width: 30px
+    width: 40px
     height: 30px
-    margin: 0px -2px /* negative margin to get rid of the annoying spacing between inline-block elements */
+    font-family: 'Open Sans', sans-serif
+    padding: 0
     border: none
+    border-radius: 0
     -webkit-app-region: no-drag
 
     &:first-child
-      margin: 0px -2px 0px 0px;
+      margin-right: -3px /* negative margin to get rid of the annoying spacing between inline-block elements */
 
     &:last-child
-      margin: 0px 0px 0px -2px;      
+      margin-left: -3px
 
     &:not(:disabled):hover
       background: $titlebar-btn-hover-bg
@@ -238,7 +247,7 @@ button
 
   span
     color: $primary-text-shade-darker
-    font-size: 0.8em
+    font-size: 0.8rem
     position: absolute
     right: 0
     bottom: -15px

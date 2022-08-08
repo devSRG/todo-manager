@@ -1,4 +1,4 @@
-.container.settings(ng-controller="SettingsController as st")
+.container(ng-controller="SettingsController as st")
   h2(ta-i18n="SETTINGS.title") Settings
   .section
     h3(ta-i18n="SETTINGS.keymap") Keymap
@@ -18,4 +18,4 @@
       tr
         td(ta-i18n="SETTINGS.theme") Theme
         td(style="text-align: end;")
-          .theme-options(ng-repeat="theme in st.themes" title="{{ theme.name }}" style="background: {{ theme.color }}" ng-class="{'active': theme.name == st.theme.name}" ng-click="st.setTheme(theme.name)")
+          .theme-options(ng-repeat="theme in st.themes" title="{{ theme.name }}" ng-style="{background: theme.color}" ng-class="{'active': theme.name == st.theme.name}" ng-click="st.setTheme(theme.name)")

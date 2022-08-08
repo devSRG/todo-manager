@@ -12,8 +12,8 @@ append scripts
 block content
   #login-form
     .container(style="height: 36px")
-      h1.login(ng-if="lg.showLogin" ta-i18n="COMMON.login") Log In
-      h1.create-user(ng-if="!lg.showLogin" ta-i18n="COMMON.create-user") Create User
+      h1.login(ng-if="lg.showLogin" ta-i18n="COMMON.login") Log in
+      h1.create-user(ng-if="!lg.showLogin" ta-i18n="COMMON.create-user") Create user
     .profile(ng-on-dragenter="lg.onDragEnter($event)" ng-on-dragover="lg.onDragOver($event)" ng-on-drop="lg.onDrop($event)")
       .overlay(ng-if="!lg.showLogin" ng-click="lg.updateAvatar()")
       img(ng-src="{{lg.avatar}}" ng-class="{'avatar': lg.avatar}")
@@ -28,10 +28,10 @@ block content
         input(type="checkbox" ng-model="lg.remember")
         span Remember me
       .container(style="height: 32px; margin-top: 8px;")
-        button.login-btn.primary(ng-if="lg.showLogin" ng-disabled="lg.loginBtnDisabled" ng-click="lg.login()" ta-i18n="COMMON.login") Log In
+        button.login-btn.primary(ng-if="lg.showLogin" ng-disabled="lg.loginBtnDisabled" ng-click="lg.login()" ta-i18n="COMMON.login") Log in
         button.new-user-btn(ng-if="!lg.showLogin" ng-disabled="lg.registerBtnDisabled" ng-click="lg.register()" ta-i18n="COMMON.register") Register
       .container(style="height: 14px; margin-top: 10px;")
-        a.new-user(ng-if="lg.showLogin" ng-click="lg.toggleNew()" ta-i18n="COMMON.create-user") Create User
+        a.new-user(ng-if="lg.showLogin" ng-click="lg.toggleNew()" ta-i18n="COMMON.create-user") Create user
         a.back(ng-if="!lg.showLogin" ng-click="lg.toggleNew()" ta-i18n="COMMON.go-back") Go back
   #err-msg(ng-show="lg.notify" ng-cloak)
     p {{ lg.notify }}

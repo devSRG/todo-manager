@@ -1,8 +1,8 @@
-$primary: #555
+$primary: #333
 $primary-shade-lighter: lighten($primary, 5%)
 $primary-shade-darker: darken($primary, 5%)
 
-$accent: royalblue
+$accent: #ac2dec
 $accent-shade-lighter: lighten($accent, 5%)
 $accent-shade-darker: darken($accent, 5%)
 
@@ -19,13 +19,13 @@ $yellow: #e4e443
 
 /* COMMON */
 
-$body-bg: #444
-$overlay-bg: #222
+$body-bg: #2d2d2d
+$overlay-bg: $primary
 $close-btn-text: #aaa
 $close-btn-hover-text: #eee
-$btn-bg: #aaa
-$btn-text: #fafafa
-$btn-disabled: #888
+$btn-bg: #666
+$btn-text: #ddd
+$btn-disabled: #555
 $btn-hover-bg: lighten($btn-bg, 5%)
 $btn-hover-text: lighten($btn-text, 5%)
 $input-bg: $primary-shade-darker
@@ -40,16 +40,17 @@ $select-dropdown-arrow: #ccc
 $select-hover-bg: #555
 $select-focus-border: #555
 $select-shadow: #3e3e3e
-$dialog-bg: #3c3c3c
-$dialog-text: #aaa
-$dialog-shadow: #333
+$dialog-bg: $primary
+$dialog-text: $primary-text
+$dialog-shadow: darken($dialog-bg, 5%)
+$toast-text: #eee
 $category-bg: #ccc
 $category-text: #eee
 $category-hover-text: #fff
 $category-default-border: #ccc
 $category-shadow: #333
 $kbd-bg: #6a6a6a
-$scrollbar-thumb-bg: darken($body-bg, 10%)
+$scrollbar-thumb-bg: darken($body-bg, 5%)
 $scrollbar-thumb-border: $body-bg
 $scrollbar-corner-bg: $body-bg
 $datepicker-bg: #3d3d3d
@@ -63,35 +64,36 @@ $datepicker-today-border: #888
 
 /* LAYOUTS */
 
-$titlebar-bg: darken($primary, 10%)
-$titlebar-text: #ccc
+$titlebar-bg: $primary
+$titlebar-text: #bbb
 $titlebar-shadow: #111
 $titlebar-btn-bg: $titlebar-bg
 $titlebar-btn-text: #aaa
 $titlebar-btn-hover-bg: lighten($titlebar-bg, 5%)
 
-$navbar-bg: darken($primary, 5%)
-$navbar-border: darken($navbar-bg, 1%)
-$navbar-menuitem-bg: darken($navbar-bg, 1%)
-$navbar-menuitem-text: #aaa
-$navbar-menuitem-border: darken($navbar-bg, 3%)
-$navbar-menuitem-hover-bg: lighten($navbar-bg, 1%)
-$navbar-menuitem-hover-text: #aaa
-$navbar-menuitem-selected-bg: lighten($navbar-bg, 3%)
-$navbar-menuitem-selected-text: #aaa
+$navbar-bg: $primary
+$navbar-border: darken($navbar-bg, 2%)
+$navbar-menuitem-bg: $navbar-bg
+$navbar-menuitem-text: $primary-text
+$navbar-menuitem-border: darken($navbar-bg, 2%)
+$navbar-menuitem-hover-bg: darken($navbar-menuitem-bg, 2%)
+$navbar-menuitem-hover-text: $primary-text-shade-lighter
+$navbar-menuitem-selected-bg: darken($navbar-menuitem-bg, 2%)
+$navbar-menuitem-selected-text: $primary-text-shade-lighter
 
-$main-bg: #444
+$main-bg: #3a3a3a
 
-$todoitem-bg: #4d4d4d
-$todoitem-hover-bg: #505050
+$todoitem-bg: #333
+$todoitem-hover-bg: #444
 $todoitem-selected-bg: $todoitem-hover-bg
 $todoitem-text: #b3b3b3
+$todoitem-desc-text: #b4b4b4
 $todoitem-default-border: #559900
 $todoitem-btn-bg: #5a5a5a
 $todoitem-btn-hover-bg: #666
-$todoitem-shadow: #383838
+$todoitem-shadow: #2a2a2a
 
-$addtodo-btn-bg: $purple
-$addtodo-btn-hover-bg: lighten($purple, 5%)
-$addtodo-btn-shadow: #333
-$addtodo-btn-hover-shadow: #555
+$addtodo-btn-bg: $accent
+$addtodo-btn-hover-bg: lighten($accent, 5%)
+$addtodo-btn-shadow: #222
+$addtodo-btn-hover-shadow: #222

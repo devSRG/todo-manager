@@ -90,6 +90,7 @@ main
   min-height: 475px
   padding: 20px
   box-sizing: border-box
+  overflow-y: auto
 
   form
     label
@@ -134,7 +135,8 @@ main
   transition: all 0.2s ease
 
   &.is-shown
-    min-height: 430px
+    height: auto
+    min-height: 480px
     visibility: visible
     opacity: 1
 
@@ -319,19 +321,27 @@ main
   min-width: 200px
   max-width: 600px
   max-height: 520px
-  background: $body-bg
+  background: $dialog-bg
   border-radius: 4px
-  box-shadow: 4px 4px 15px 4px $dialog-shadow
+  box-shadow: 0px 2px 15px 2px $dialog-shadow
   overflow: hidden
   position: fixed
   top: 50%
   left: 50%
+  opacity: 1
   transform: translateX(-50%) translateY(-50%)
-  z-index: 9999
-  transition: all 0.4s cubic-bezier(0, 0, 0.2, 1)
+  z-index: 2
+  transition: all 0.2s cubic-bezier(0, 0, 0.2, 1.2)
 
-  &.ng-enter, &.ng-leave
-    top: 150%
+  &.ng-leave.ng-leave-active,
+  &.ng-enter
+    top: 80%
+    opacity: 0
+
+  &.ng-leave,
+  &.ng-enter.ng-enter-active
+    top: 50%
+    opacity: 0
 
   .close-btn
     width: 30px
@@ -345,7 +355,7 @@ main
       background: none
 
       > svg path
-      fill: $close-btn-hover-text
+        fill: $close-btn-hover-text
 
   .header
     padding: 0px 30px 10px 30px
@@ -377,11 +387,16 @@ main
   position: absolute
   top: 30px
   left: 0
-  transition: all 0.4s ease-out
+  z-index: 1
+  transition: all 0.2s ease-in
 
-  &.ng-enter, &.ng-leave
+  &.ng-leave.ng-leave-active,
+  &.ng-enter
     opacity: 0
 
+  &.ng-leave,
+  &.ng-enter.ng-enter-active
+    opacity: 0.8
 
 .toast
   min-width: 100px
@@ -420,3 +435,11 @@ main
 
     &.-today
       border-color: $datepicker-today-border
+
+.scroll-fade
+  width: 620px
+  height: 20px
+  background: linear-gradient(to top, $main-bg, transparent)
+  position: fixed
+  bottom: 20px
+  z-index: 1  

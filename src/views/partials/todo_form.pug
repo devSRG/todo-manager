@@ -14,12 +14,11 @@
     .row
       .col-2
         label(for="date" ta-i18n="COMMON.date") Date
-        .input-group
-          .icon(ng-click="ac.toggleDatePicker()")
+        .input-group.date(ng-click="ac.toggleDatePicker()")
+          .icon
             include ../../../assets/calendar-icon.svg
           input(type="text" name="date" ng-model="ac.dueDate")
         date-picker(ng-model="ac.dueDate" ng-show="ac.showDatePicker" on-date-selected="ac.toggleDatePicker()")
-          //- tadate-picker
       .col-2
         .mark-complete
           label(for="complete" class="left" ta-i18n="TODO.mark-complete") Mark complete

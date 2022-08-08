@@ -1,185 +1,204 @@
-.top-header
-  margin-bottom: 20px
+.todo-page, .completed-page
+  .top-header
+    margin-bottom: 20px
 
-  .section-title
-    display: inline-block
-    width: 24%
-    overflow: hidden
-
-    h3
-      margin-bottom: 0
-
-  .category
-    float: right
-
-.section
-  height: calc(100vh - 125px)
-  position: relative
-  overflow-y: auto
-
-.todo-list
-  display: grid
-  grid-template-columns: 1fr 1fr
-  grid-column-gap: 10px
-  grid-row-gap: 10px
-  max-height: calc(100vh - 115px)
-  padding: 0px 6px 10px 6px;
-  overflow-y: auto
-  overflow-x: hidden
-  transition: opacity 0.4s ease-in;
-
-  .list
-    background: $todoitem-bg
-    color: $todoitem-text
-    border-top: 5px solid $todoitem-default-border
-    padding: 5px 10px
-    position: relative
-    box-sizing: border-box
-    box-shadow: 1px 1px 6px 1px $todoitem-shadow
-    cursor: pointer
-    transition: 1s all
-
-    &.green
-      border-color: $green
-
-    &.red
-      border-color: $red
-
-    &.blue
-      border-color: $blue
-
-    &.purple
-      border-color: $purple
-
-    &.yellow
-      border-color: $yellow
-
-    .row
-      width: 100%
-      margin-bottom: 4px
+    .section-title
+      display: inline-block
+      width: 24%
       overflow: hidden
 
-    p
-      margin-top: 4px
-      margin-bottom: 4px
-      overflow-wrap: break-word
+      h3
+        margin-bottom: 0
 
-    p.title
-      font-size: 1.1em
-      font-weight: 500
-
-    p.desc
-      font-size: 1em
-
-    .close-btn
-      display: block
-      background: $todoitem-btn-bg
-      padding: 3px 8px
-      position: relative
-      cursor: pointer
-      opacity: 0
-      transition: opacity 0.4s
-
-      &:hover
-        background: $todoitem-btn-hover-bg
-
-    .tag
-      display: block
-      color: #fff
-      background: #5a5a5a
-      padding: 2px 6px
-      font-size: 0.9em
-      border-radius: 9px
-
-      &.completed-todo
-        background: limegreen
-
-      &.dur-todo
-        background: orange
-
-    .left
-      margin-right: 3px
-      float: left
-
-    .right
-      margin-left: 3px
+    .category
       float: right
 
-    .todo-edit
-      background: $todoitem-btn-bg
-      border: 0
-      border-radius: 2px
-      padding: 5px 8px
-      outline: none
-      cursor: pointer
-      transition: background ease o.4s
+  .section
+    height: calc(100vh - 125px)
+    position: relative
+    overflow-y: auto
 
-      &:hover
-        background: $todoitem-btn-hover-bg
+    .todo-list
+      display: grid
+      grid-template-columns: 1fr 1fr
+      gap: 10px
+      padding: 1px
+      overflow-y: auto
+      overflow-x: hidden
 
-    // &.ng-enter.ng-enter-active
+      .todo
+        height: 100%
+        background: $todoitem-bg
+        color: $todoitem-text
+        border-top: 4px solid $todoitem-default-border
+        padding: 5px 10px
+        position: relative
+        box-sizing: border-box
+        box-shadow: 0px 0px 1px 1px $todoitem-shadow
+        cursor: pointer
+        transition: background 0.4s ease
+
+        &.green
+          border-top-color: $green
+
+        &.red
+          border-top-color: $red
+
+        &.blue
+          border-top-color: $blue
+
+        &.purple
+          border-top-color: $purple
+
+        &.yellow
+          border-top-color: $yellow
+
+        .row
+          width: 100%
+          margin-bottom: 4px
+          overflow: hidden
+
+        p
+          margin-top: 4px
+          margin-bottom: 4px
+          overflow-wrap: break-word
+
+          &.title
+            font-size: 1.1em
+            font-weight: 500
+
+          &.desc
+            color: $todoitem-desc-text
+            font-size: 0.9em
+
+        .btn
+          display: inline-block
+          // background: $todoitem-btn-bg
+          width: 22px
+          height: 22px
+          position: relative
+          cursor: pointer
+          opacity: 0
+          overflow: hidden
+          transition: opacity 0.4s
+
+          & > svg
+            width: 22px
+            height: 22px
+
+            path
+              fill: $primary-text
+
+          &:hover
+            background: $todoitem-btn-hover-bg
+
+            & > svg path
+              fill: $primary-text-shade-darker
+
+          &.confirm
+            opacity: 1
+
+            & > svg path
+              fill: $red
+
+        .tag
+          display: block
+          color: #fff
+          background: #5a5a5a
+          padding: 2px 6px
+          font-size: 0.9em
+          border-radius: 9px
+
+          &.completed-todo
+            background: limegreen
+
+          &.dur-todo
+            background: orange
+
+        .left
+          margin-right: 3px
+          float: left
+
+        .right
+          margin-left: 3px
+          float: right
+
+        .todo-edit
+          background: $todoitem-btn-bg
+          border: 0
+          border-radius: 2px
+          padding: 5px 8px
+          outline: none
+          cursor: pointer
+          transition: background ease 0.4s
+
+          &:hover
+            background: $todoitem-btn-hover-bg
+
+        // &.ng-enter.ng-enter-active
+        //   opacity: 1
+        //   left: 0
+
+        &:hover
+          background: $todoitem-hover-bg
+
+        &:hover .btn
+          opacity: 1
+
+        .selected
+          background: $todoitem-selected-bg
+          height: 120px
+
+    .add-todo
+      position: fixed
+      right: 20px
+      bottom: 20px
+      z-index: 1
+
+      button
+        width: 40px
+        height: 40px
+        color: white
+        background: $addtodo-btn-bg
+        text-align: center
+        padding: 0
+        border-radius: 20px
+        box-shadow: 2px 4px 6px 2px $addtodo-btn-shadow
+        transition: all 0.4s ease
+
+        &:hover
+          background: $addtodo-btn-hover-bg
+          box-shadow: 1px 2px 6px 2px $addtodo-btn-hover-shadow
+
+        &:active
+          box-shadow: 0px 0px 6px 3px $addtodo-btn-shadow
+
+    .empty-todo
+      text-align: center
+      position: absolute
+      top: 50%
+      left: 50%
+      transform: translate(-50%, -50%)
+
+      p
+        color: $primary-text-shade-lighter
+        margin-top: 20px
+
+  .todo-form
+    input[type=text], textarea
+      padding: 10px 8px
+
+    .mark-complete
+      top: 50%
+      transform: translateY(-50%)
+
+
+  @keyframes slide-in
+    from
+      opacity: 0
+      transform: translateX(-25%)
+
+    to
       opacity: 1
-      left: 0
-
-    &:hover
-      background: $todoitem-hover-bg
-
-    &:hover .close-btn
-      opacity: 1
-
-    .selected
-      background: $todoitem-selected-bg
-      height: 120px
-
-.add-todo
-  position: fixed
-  right: 20px
-  bottom: 20px
-
-  button
-    width: 40px
-    height: 40px
-    color: white
-    background: $addtodo-btn-bg
-    text-align: center
-    padding: 0
-    border-radius: 20px
-    box-shadow: 2px 4px 6px 2px $addtodo-btn-shadow
-    transition: all 0.4s ease
-
-    &:hover
-      background: $addtodo-btn-hover-bg
-      box-shadow: 1px 2px 6px 2px $addtodo-btn-hover-shadow
-
-    &:active
-      box-shadow: 0px 0px 6px 3px $addtodo-btn-shadow
-
-.empty-todo
-  text-align: center
-  position: absolute
-  top: 50%
-  left: 50%
-  transform: translate(-50%, -50%)
-
-  p
-    color: $primary-text-shade-lighter
-    margin-top: 20px
-
-.todo-form
-  input[type=text], textarea
-    padding: 10px 8px
-
-  .mark-complete
-    top: 50%
-    transform: translateY(-50%)
-
-
-@keyframes slide-in
-  from
-    opacity: 0
-    transform: translateX(-25%)
-    
-  to
-    opacity: 1
-    transform: translateX(0%)
-    
+      transform: translateX(0%)
+      
