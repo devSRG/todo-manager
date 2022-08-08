@@ -2,7 +2,7 @@ angular
     .module('todo-app')
     .value('constants', {
         CONFIG: {
-            MAINWINDOW_ONLY_CLOSE: false,
+            MAIN_WINDOW_ONLY_CLOSE: false,
             MAXIMIZE_ENABLED: false
         },
         EVENT: {
