@@ -2,7 +2,7 @@ angular
     .module('todo-app')
     .controller('SettingsController', SettingsController);
 
-function SettingsController($scope, settings) {
+function SettingsController($scope, settings, orm) {
     var vm = this;
 
     vm.keymaps = [
@@ -24,22 +24,40 @@ function SettingsController($scope, settings) {
     vm.setLocale = setLocale;
     vm.setFontSize = setFontSize;
     vm.setTheme = setTheme;
-    vm.enableMaximize = settings.maximize;
-    vm.toggleMaximize = settings.toggleMaximize;
 
     function setLocale(locale) {
         settings.setUserLocale(locale);
+
+        var user = settings.getLoggedInUser();
+
+        user.locale = locale;
+        user.settings = JSON.stringify(user.settings);
+
+        orm.User.update(user.id, user);
     }
 
     function setFontSize(size) {
         settings.setUserFontSize(size);
+
+        var user = settings.getLoggedInUser();
+
+        user.settings.fontSize = size;
+        user.settings = JSON.stringify(user.settings);
+
+        orm.User.update(user.id, user);
     }
 
     function setTheme(theme) {
         settings.setUserTheme(theme);
 
+        var user = settings.getLoggedInUser();
+
+        user.settings.theme = theme;
+        user.settings = JSON.stringify(user.settings);
         vm.theme = settings.getUserTheme();
+
+        orm.User.update(user.id, user);
     }
 }
 
-SettingsController.$inject = ['$scope', 'settings'];
+SettingsController.$inject = ['$scope', 'settings', 'orm'];

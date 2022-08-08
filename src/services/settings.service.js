@@ -1,14 +1,10 @@
-var i18n = require('i18n');
-
 angular
     .module('todo-app')
     .service('settings', settings);
 
-function settings($rootScope, util, database, constants) {
-    this.strings = {};
+function settings($rootScope, util, database, constants, i18n) {
     this.user = null;
     this.config = {};
-    this.todos = [];
     this.settings = {
         locales: [
             {
@@ -59,10 +55,13 @@ function settings($rootScope, util, database, constants) {
     this.getLoggedInUser = getLoggedInUser;
     this.removeLoggedInUser = removeLoggedInUser;
     this.getUserLocale = getUserLocale;
+    this.getDefaultLocale = getDefaultLocale;
     this.setUserLocale = setUserLocale;
     this.getUserFontSize = getUserFontSize;
+    this.getDefaultFontSize = getDefaultFontSize;
     this.setUserFontSize = setUserFontSize;
     this.getUserTheme = getUserTheme;
+    this.getDefaultTheme = getDefaultTheme;
     this.setUserTheme = setUserTheme;
     this.getLocales = getLocales;
     this.getFontSizes = getFontSizes;
@@ -111,19 +110,25 @@ function settings($rootScope, util, database, constants) {
         }.bind(this));
 
         if (!locale) {
-            locale = this.settings.locales.find(function (locale) {
-                return locale.value == this.defaultConfig.locale;
-            }.bind(this));
+            locale = getDefaultLocale.call(this);
         }
 
         return locale;
     }
 
-    function setUserLocale(locale) {
-        this.config.locale = locale;
-        i18n.setLocale(locale);
+    function getDefaultLocale() {
+        return this.settings.locales.find(function (locale) {
+            return locale.value == this.defaultConfig.locale;
+        }.bind(this))
+    }
 
-        $rootScope.$broadcast(constants.EVENT.LOCALE_UPDATED);
+    function setUserLocale(locale) {
+        if (this.config.locale !== locale) {
+            this.config.locale = locale;
+            i18n.setLocale(locale);
+    
+            $rootScope.$broadcast(constants.EVENT.LOCALE_UPDATED);
+        }
     }
 
     function getUserFontSize() {
@@ -132,18 +137,24 @@ function settings($rootScope, util, database, constants) {
         }.bind(this));
 
         if (!fontSize) {
-            fontSize = this.settings.fontSizes.find(function (fontSize) {
-                return fontSize.value == this.defaultConfig.fontSize;
-            }.bind(this));
+            fontSize = getDefaultFontSize.call(this);
         }
 
         return fontSize;
     }
 
-    function setUserFontSize(size) {
-        this.config.fontSize = size;
+    function getDefaultFontSize() {
+        return this.settings.fontSizes.find(function (fontSize) {
+            return fontSize.value == this.defaultConfig.fontSize;
+        }.bind(this));
+    }
 
-        $rootScope.$broadcast(constants.EVENT.FONTSIZE_UPDATED);
+    function setUserFontSize(size) {
+        if (this.config.fontSize != size) {
+            this.config.fontSize = size;
+
+            $rootScope.$broadcast(constants.EVENT.FONTSIZE_UPDATED);
+        }
     }
 
     function getUserTheme() {
@@ -152,21 +163,25 @@ function settings($rootScope, util, database, constants) {
         }.bind(this));
 
         if (!theme) {
-            theme = this.settings.themes.find(function (theme) {
-                return theme.name == this.defaultConfig.theme;
-            }.bind(this));
+            theme = getDefaultTheme.call(this);
         }
 
         return theme;
     }
 
-    function setUserTheme(theme) {
-        this.config.theme = theme;
-
-        $rootScope.$broadcast(constants.EVENT.THEME_UPDATED);
+    function getDefaultTheme() {
+        return this.settings.themes.find(function (theme) {
+            return theme.name == this.defaultConfig.theme;
+        }.bind(this));
     }
 
+    function setUserTheme(theme) {
+        if (this.config.theme != theme) {
+            this.config.theme = theme;
 
+            $rootScope.$broadcast(constants.EVENT.THEME_UPDATED);
+        }
+    }
 
     function getLocales() {
         return this.settings.locales;
@@ -181,4 +196,4 @@ function settings($rootScope, util, database, constants) {
     }
 }
 
-settings.$inject = ['$rootScope', 'utility', 'database', 'constants'];
+settings.$inject = ['$rootScope', 'utility', 'database', 'constants', 'i18n'];
