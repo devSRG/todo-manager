@@ -4,19 +4,19 @@ angular
     .module('todo-app')
     .controller('LoginController', LoginController);
 
-function LoginController($rootScope, $scope, util, file, orm, ipc) {
+function LoginController($rootScope, $scope, file, orm, ipc) {
     var vm = this;
 
-    vm.name = '';
+    vm.name = null;
     vm.avatar = null;
     vm.notify = null;
-    vm.users = []; 
+    vm.users = [];
     vm.userAvailable = false;
     vm.showLogin = true;
     vm.loginBtnDisabled = true;
     vm.registerBtnDisabled = false;
-    vm.login = login;
     vm.blur = onblur;
+    vm.login = login;
     vm.register = register;
     vm.checkUser = checkUser;
     vm.toggleNew = toggleNew;
@@ -29,17 +29,20 @@ function LoginController($rootScope, $scope, util, file, orm, ipc) {
 
     orm.User.getAll().then(function (data) {
         vm.users = data;
-        console.log('Users:', data)
     });
 
     function login() {
-        if (vm.name != '') {
+        if (vm.name) {
             var user = vm.users.filter(function (user) { return user.name == vm.name; })[0];
+            
+            if (user) {
+                orm.User.get(user.id).then(function (data) {
+                    ipc.send(ipc.cmd.LOGIN, data);
 
-            $rootScope.user = [vm.name, vm.avatar];
-            console.log('rootScope user', $rootScope.user, util.localStorage.get('user'))
-            util.localStorage.set('user', user);
-            ipc.send(ipc.cmd.LOGIN, [vm.name, vm.avatar]);
+                    vm.name = null;
+                    vm.avatar = null;
+                });
+            }
         }
     }
 
@@ -126,4 +129,4 @@ function LoginController($rootScope, $scope, util, file, orm, ipc) {
     }
 }
 
-LoginController.$inject = ['$rootScope', '$scope', 'utility', 'file', 'orm', 'ipc'];
+LoginController.$inject = ['$rootScope', '$scope', 'file', 'orm', 'ipc'];

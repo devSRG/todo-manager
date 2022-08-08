@@ -6,6 +6,7 @@ angular
 
 function settings($rootScope, util, database, constants) {
     this.strings = {};
+    this.user = null;
     this.config = {};
     this.todos = [];
     this.settings = {
@@ -55,6 +56,8 @@ function settings($rootScope, util, database, constants) {
     };
 
     this.initialize = initialize;
+    this.getLoggedInUser = getLoggedInUser;
+    this.removeLoggedInUser = removeLoggedInUser;
     this.getUserLocale = getUserLocale;
     this.setUserLocale = setUserLocale;
     this.getUserFontSize = getUserFontSize;
@@ -65,18 +68,41 @@ function settings($rootScope, util, database, constants) {
     this.getFontSizes = getFontSizes;
     this.getThemes = getThemes;
 
-    function initialize() {
+    function initialize(userData) {
         if (database.isInitialized()) {
-            var user = util.localStorage.get('user');
+            if (userData) {
+                var user = {
+                    id: userData.id,
+                    name: userData.name,
+                    avatar: userData.avatar,
+                    locale: userData.locale,
+                    settings: JSON.parse(userData.settings)
+                };
 
-            if (user) {
-                user.settings = user.settings || null;
-
-                user.locale !== this.defaultConfig.locale && this.setUserLocale(user.locale);
-                user.settings.fontSize !== this.defaultConfig.fontSize && this.setUserFontSize(user.settings.fontSize);
-                user.settings.theme !== this.defaultConfig.theme && this.setUserTheme(user.settings.theme);
+                this.user = user;
             }
+
+            setupConfig.call(this);
         }
+    }
+
+    function setupConfig() {
+        this.config = JSON.parse(JSON.stringify(this.defaultConfig));
+
+        if (this.user) {
+            this.user.settings = this.user.settings || {};
+            this.user.locale !== this.config.locale && this.setUserLocale(this.user.locale);
+            this.user.settings.fontSize !== this.config.fontSize && this.setUserFontSize(this.user.settings.fontSize);
+            this.user.settings.theme !== this.config.theme && this.setUserTheme(this.user.settings.theme);
+        }
+    }
+
+    function getLoggedInUser() {
+        return this.user;
+    }
+
+    function removeLoggedInUser() {
+        this.user = null;
     }
 
     function getUserLocale() {

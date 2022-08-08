@@ -12,9 +12,9 @@ function user(util, database) {
         getAll: getAll,
     };
 
-    function get(username) {
+    function get(id) {
         return util.defer(function (deferred) {
-            db.get('SELECT * FROM user WHERE name = ?', [username], function (err, row) {
+            db.get('SELECT * FROM user WHERE id = ?', [id], function (err, row) {
                 if (err) {
                     deferred.reject(err);
                 }

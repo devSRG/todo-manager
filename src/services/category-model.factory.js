@@ -2,9 +2,8 @@ angular
     .module('todo-app')
     .factory('category', category);
 
-function category(util, database) {
+function category(util, database, settings) {
     var db = database.getDB();
-    var user = util.localStorage.get('user');
 
     return {
         get: get,
@@ -14,6 +13,8 @@ function category(util, database) {
 
     function get(type) {
         return util.defer(function (deferred) {
+            var user = settings.getLoggedInUser();
+
             if (user) {
                 db.get('SELECT id, type, color FROM category WHERE type = ? AND userId = ?', [type, user.id], function (err, row) {
                     if (err) {
@@ -28,6 +29,8 @@ function category(util, database) {
 
     function count() {
         return util.defer(function (deferred) {
+            var user = settings.getLoggedInUser();
+
             if (user) {
                 db.get('SELECT COUNT(id) AS count FROM category WHERE userId = ?', [user.id], function (err, row) {
                     if (err) {
@@ -42,6 +45,8 @@ function category(util, database) {
 
     function getAll() {
         return util.defer(function (deferred) {
+            var user = settings.getLoggedInUser();
+
             if (user) {
                 db.all('SELECT id, type, color FROM category WHERE userId = ?', [user.id], function (err, rows) {
                     if (err) {
@@ -55,4 +60,4 @@ function category(util, database) {
     }
 }
 
-category.$inject = ['utility', 'database'];
+category.$inject = ['utility', 'database', 'settings'];

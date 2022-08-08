@@ -2,9 +2,8 @@ angular
     .module('todo-app')
     .factory('todo', todo);
 
-function todo(util, database) {
+function todo(util, database, settings) {
     var db = database.getDB();
-    var user = util.localStorage.get('user');
 
     return {
         get: get,
@@ -19,6 +18,7 @@ function todo(util, database) {
 
     function get(id) {
         return util.defer(function (deferred) {
+            var user = settings.getLoggedInUser();
 
             if (user && id) {
                 db.get('SELECT id, title, description, completed, categoryId, createdTime, createdDate FROM todo WHERE id = ? AND userId = ?', 
@@ -36,6 +36,8 @@ function todo(util, database) {
 
     function add(data) {
         return util.defer(function (deferred) {
+            var user = settings.getLoggedInUser();
+
             if (user) {
                 db.run('INSERT INTO todo (title, description, completed, dueDate, categoryId, userId) VALUES (?, ?, ?, ?, ?, ?)', 
                     [data.title, data.description, data.completed, data.dueDate, data.categoryId, user.id],
@@ -52,6 +54,8 @@ function todo(util, database) {
 
     function update(id, data) {
         return util.defer(function (deferred) {
+            var user = settings.getLoggedInUser();
+
             if (user && id) {
                 db.run('UPDATE todo SET title = ?, description = ?, completed = ?, dueDate = ?, categoryId = ? WHERE id = ? AND userId = ?',
                     [data.title, data.description, data.completed, data.dueDate, data.categoryId, id, user.id],
@@ -68,6 +72,7 @@ function todo(util, database) {
 
     function remove(id) {
         return util.defer(function (deferred) {
+            var user = settings.getLoggedInUser();
 
             if (user && id) {
                 db.run('DELETE FROM todo WHERE id = ? AND userId = ?', 
@@ -85,6 +90,8 @@ function todo(util, database) {
 
     function count() {
         return util.defer(function (deferred) {
+            var user = settings.getLoggedInUser();
+
             if (user) {
                 db.get('SELECT COUNT(id) AS count FROM todo WHERE userId = ?', 
                     [user.id], 
@@ -101,6 +108,8 @@ function todo(util, database) {
 
     function activeCount() {
         return util.defer(function (deferred) {
+            var user = settings.getLoggedInUser();
+
             if (user) {
                 db.get('SELECT COUNT(id) AS count FROM todo WHERE userId = ? AND completed = false', 
                     [user.id], 
@@ -117,6 +126,8 @@ function todo(util, database) {
 
     function getAll() {
         return util.defer(function (deferred) {
+            var user = settings.getLoggedInUser();
+
             if (user) {
                 db.all('SELECT id, title, description, completed, categoryId, createdTime, createdDate FROM todo WHERE userId = ?', 
                     [user.id], 
@@ -133,6 +144,8 @@ function todo(util, database) {
 
     function markComplete(id, condition) {
         return util.defer(function (deferred) {
+            var user = settings.getLoggedInUser();
+
             if (user && id && (condition == true || condition == false)) {
                 db.run('UPDATE todo SET completed = ? WHERE id = ? AND userId = ?', 
                     [condition, id, user.id], 
@@ -148,4 +161,4 @@ function todo(util, database) {
     }
 }
 
-todo.$inject = ['utility', 'database'];
+todo.$inject = ['utility', 'database', 'settings'];
