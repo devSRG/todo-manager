@@ -23,7 +23,10 @@ block content
           <path d="M0 13.6905C0 6.12943 6.15189 0 13.7406 0C21.3294 0 27.4812 6.12943 27.4812 13.6905C27.4812 21.2515 21.3294 27.381 13.7406 27.381C6.15189 27.381 0 21.2515 0 13.6905Z" transform="translate(11.557007 0)" fill="#EAEAEA" fill-rule="evenodd" stroke="none" />
         </svg>
     form(ng-cloak)
-      input(type="text" ng-model="lg.name" ng-keyup="lg.checkUser($event)" tabindex="1" autofocus)
+      input(type="text" ng-model="lg.name" ng-keyup="lg.checkUser()" tabindex="1" autofocus)
+      .remember-me
+        input(type="checkbox" ng-model="lg.remember")
+        span Remember me
       .container(style="height: 32px; margin-top: 8px;")
         button.login-btn.primary(ng-if="lg.showLogin" ng-disabled="lg.loginBtnDisabled" ng-click="lg.login()" ta-i18n="COMMON.login") Log In
         button.new-user-btn(ng-if="!lg.showLogin" ng-disabled="lg.registerBtnDisabled" ng-click="lg.register()" ta-i18n="COMMON.register") Register

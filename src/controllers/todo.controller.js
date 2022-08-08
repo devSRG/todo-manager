@@ -2,7 +2,7 @@ angular
     .module('todo-app')
     .controller('TodoController', TodoController);
 
-function TodoController($scope, orm, popup, i18n) {
+function TodoController($scope, constants, orm, popup, i18n) {
     var vm = this;
 
     vm.todos = [];
@@ -21,8 +21,13 @@ function TodoController($scope, orm, popup, i18n) {
     $scope.updateCategoryList = updateCategoryList;
     $scope.updateTodoList = updateTodoList;
 
-    updateCategoryList();
-    updateTodoList();
+    $scope.$on(constants.EVENT.INIT, init);
+    $scope.$on(constants.EVENT.DISPOSE, dispose);
+
+    function init() {
+        updateCategoryList();
+        updateTodoList();
+    }
 
     function updateCategoryList() {
         orm.Category.getAll().then(function (data) {        
@@ -118,6 +123,14 @@ function TodoController($scope, orm, popup, i18n) {
         
         return null;
     }
+
+    function dispose() {
+        vm.todos = [];
+        vm.filteredTodos = [];
+        vm.categories = [];
+        vm.selectedTodo = null;
+        vm.activeCategoryId = null;
+    }
 }
 
-TodoController.$inject = ['$scope', 'orm', 'popup', 'i18n'];
+TodoController.$inject = ['$scope', 'constants', 'orm', 'popup', 'i18n'];

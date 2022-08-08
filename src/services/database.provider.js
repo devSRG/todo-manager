@@ -37,6 +37,9 @@ function database() {
                 console.log('Exec ERROR:', err);
                 this.setup();
             }
+
+            // TODO: Implement a way to update database tables
+            // this.db.exec(this.schema.ALTER_QUERY, function (err) { if (err) { console.log('ERROR', err); }});
             this.initialized = true;             
         }.bind(this));
 
@@ -49,7 +52,6 @@ function database() {
             this.db.exec(this.schema.CREATE_USER_TABLE, function (err) { if (err) { console.log('ERROR:', err); }});
             this.db.exec(this.schema.CREATE_CATEGORY_TABLE, function (err) { if (err) { console.log('ERROR', err); }});
             this.db.exec(this.schema.CREATE_TODO_TABLE, function (err) { if (err) { console.log('ERROR:', err); }});
-            this.db.exec(this.schema.TEST_DATA, function (err) { if (err) { console.log('ERROR', err); }});
         }.bind(this));
     }
 

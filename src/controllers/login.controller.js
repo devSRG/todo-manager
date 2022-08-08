@@ -11,6 +11,7 @@ function LoginController($rootScope, $scope, file, orm, ipc) {
     vm.avatar = null;
     vm.notify = null;
     vm.users = [];
+    vm.remember = false;
     vm.userAvailable = false;
     vm.showLogin = true;
     vm.loginBtnDisabled = true;
@@ -37,7 +38,12 @@ function LoginController($rootScope, $scope, file, orm, ipc) {
             
             if (user) {
                 orm.User.get(user.id).then(function (data) {
-                    ipc.send(ipc.cmd.LOGIN, data);
+                    if (vm.remember) {
+                        ipc.send(ipc.cmd.LOG_IN, Object.assign(data, {remember: 1}));
+                        orm.User.setPersist(user.id, vm.remember);
+                    } else {
+                        ipc.send(ipc.cmd.LOG_IN, data);
+                    }
 
                     vm.name = null;
                     vm.avatar = null;

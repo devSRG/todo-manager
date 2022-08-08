@@ -2,7 +2,7 @@ angular
     .module('todo-app')
     .controller('MainController', MainController);
 
-function MainController($rootScope, $scope, $document, settings, constants) {
+function MainController($rootScope, $scope, $document, util, settings, constants, i18n, ipc, orm) {
     var vm = this;
 
     $rootScope.blurBackground = false;
@@ -21,12 +21,13 @@ function MainController($rootScope, $scope, $document, settings, constants) {
     
     $scope.openDialog = openDialog;
 
-    $scope.$on(constants.EVENT.FONTSIZE_UPDATED, updateFontSize);
+    $scope.$on(constants.EVENT.FONT_SIZE_UPDATED, updateFontSize);
     $scope.$on(constants.EVENT.THEME_UPDATED, updateTheme);
+    $scope.$on(constants.EVENT.LOGGED_IN_USER, setup)
+    $scope.$on(constants.EVENT.DISPOSE, dispose);
 
-    $rootScope.$watchGroup(['blurBackground', 'showOverlay'], function() {
-        vm.blurBackground = $rootScope.blurBackground;
-        vm.showOverlay = $rootScope.showOverlay;
+    ipc.on('user', function (evt, userData) {
+        setup(null, userData);
     });
 
     // Settings needs to be initialized within the controller for events to work properly
@@ -42,6 +43,11 @@ function MainController($rootScope, $scope, $document, settings, constants) {
     // };
 
     // i18n.configure(i18nOpts);
+    
+    function setup(evt, userData) {
+        settings.initialize(userData);
+        $scope.$broadcast(constants.EVENT.INIT);
+    }
 
     function updatePage(page) {
         $rootScope.currentPage = page;
@@ -72,6 +78,10 @@ function MainController($rootScope, $scope, $document, settings, constants) {
 
         links[links.length - 1].href = '../css/' + theme.toLowerCase() + '-styles.css';
     }
+
+    function dispose() {
+        settings.removeLoggedInUser();
+    }
 }
 
-MainController.$inject = ['$rootScope', '$scope', '$document', 'settings', 'constants'];
+MainController.$inject = ['$rootScope', '$scope', '$document', 'utility', 'settings', 'constants', 'i18n', 'ipc', 'orm'];

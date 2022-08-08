@@ -2,7 +2,7 @@ angular
     .module('todo-app')
     .controller('SettingsController', SettingsController);
 
-function SettingsController($scope, settings, orm) {
+function SettingsController($scope, constants, settings, orm) {
     var vm = this;
 
     vm.keymaps = [
@@ -18,12 +18,21 @@ function SettingsController($scope, settings, orm) {
     vm.locales = settings.getLocales();
     vm.fontSizes = settings.getFontSizes();
     vm.themes = settings.getThemes();
-    vm.locale = settings.getUserLocale();
-    vm.fontSize = settings.getUserFontSize();
-    vm.theme = settings.getUserTheme();
+    vm.locale = null;
+    vm.fontSize = null;
+    vm.theme = null;
     vm.setLocale = setLocale;
     vm.setFontSize = setFontSize;
     vm.setTheme = setTheme;
+
+    $scope.$on(constants.EVENT.INIT, init);
+    $scope.$on(constants.EVENT.DISPOSE, dispose);
+
+    function init() {
+        vm.locale = settings.getUserLocale();
+        vm.fontSize = settings.getUserFontSize();
+        vm.theme = settings.getUserTheme();
+    }
 
     function setLocale(locale) {
         settings.setUserLocale(locale);
@@ -58,6 +67,12 @@ function SettingsController($scope, settings, orm) {
 
         orm.User.update(user.id, user);
     }
+
+    function dispose() {
+        vm.locale = settings.getDefaultLocale();
+        vm.fontSize = settings.getDefaultFontSize();
+        vm.theme = settings.getDefaultTheme();
+    }
 }
 
-SettingsController.$inject = ['$scope', 'settings', 'orm'];
+SettingsController.$inject = ['$scope', 'constants', 'settings', 'orm'];

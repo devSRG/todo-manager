@@ -10,12 +10,21 @@ angular
     }])
     .run(Initialize);
 
-function Initialize($rootScope, settings, ipc, constants, i18n) {
+function Initialize($rootScope, settings, ipc, constants, i18n, orm) {
     $rootScope.mainWindowOnlyClose = constants.CONFIG.MAIN_WINDOW_ONLY_CLOSE;
     $rootScope.maximizeEnabled = constants.CONFIG.MAXIMIZE_ENABLED;
     $rootScope.close = close;
     $rootScope.minimize = minimize;
     $rootScope.maximize = maximize;
+
+    orm.User.getPersistedUser().then(function (data) {
+        if (data) {
+            $rootScope.$broadcast(constants.EVENT.LOGGED_IN_USER, data);
+            ipc.send(ipc.cmd.SHOW_MAIN_WINDOW);
+        } else {
+            ipc.send(ipc.cmd.SHOW_LOG_IN_WINDOW);
+        }
+    });
 
     var locales = settings.getLocales();
     var i18nOpts = {
@@ -47,4 +56,4 @@ function Initialize($rootScope, settings, ipc, constants, i18n) {
     }
 }
 
-Initialize.$inject = ['$rootScope', 'settings', 'ipc', 'constants', 'i18n'];
+Initialize.$inject = ['$rootScope', 'settings', 'ipc', 'constants', 'i18n', 'orm'];

@@ -10,6 +10,8 @@ function user(util, database) {
         add: add,
         update: update,
         getAll: getAll,
+        getPersistedUser: getPersistedUser,
+        setPersist: setPersist
     };
 
     function get(id) {
@@ -64,6 +66,31 @@ function user(util, database) {
         });
     }
 
+    function getPersistedUser() {
+        return util.defer(function (deferred) {
+            db.get('SELECT * FROM user WHERE persist = true LIMIT 1', [], function (err, row) {
+                if (err) {
+                    deferred.reject(err);
+                }
+
+                deferred.resolve(row);
+            });
+        });
+    }
+
+    function setPersist(id, condition) {
+        return util.defer(function (deferred) {
+            db.run('UPDATE user SET persist = ? WHERE id = ?',
+                [condition, id],
+                function (err) {
+                    if (err) {
+                        deferred.reject(err);
+                    }
+
+                    deferred.resolve(this.changes);
+                }.bind(db));
+        })
+    }
 }
 
 user.$inject = ['utility', 'database'];

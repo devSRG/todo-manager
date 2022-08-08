@@ -16,6 +16,7 @@ function createLoginWindow() {
         title: 'To do Manager',
         resizable: false,
         frame: false,
+        show: false,
         backgroundColor: '#666',
         icon: electron.nativeImage.createFromPath('assets/todo_icon.png'),
         webPreferences: {
@@ -34,6 +35,7 @@ function createMainWindow() {
         title: 'To do Manager',
         resizable: false,
         frame: false,
+        show: false,
         backgroundColor: '#666',
         icon: electron.nativeImage.createFromPath('assets/todo_icon.png'),
         webPreferences: {
@@ -52,7 +54,7 @@ function createMainWindow() {
 }
 
 app.on('ready', function() {
-    // createLoginWindow();
+    createLoginWindow();
     createMainWindow();
     mainWindow.webContents.openDevTools();
 });
@@ -62,7 +64,7 @@ app.on('child-process-gone', childLog);
 app.on('gpu-process-crashed', gpuLog);
 
 function renderLog(event) {
-    console.log('RENDER', event)
+    // console.log('RENDER', event)
 }
 
 function childLog(event) {
@@ -75,24 +77,32 @@ function gpuLog(event) {
 
 /*------------------ IPC -------------------*/
 
-ipcMain.on('login', function(event, args) {
-    loginWindow.hide();
-    createMainWindow();
-
-    mainWindow.webContents.openDevTools();
-});
-
-ipcMain.on('logout', function() {
-    mainWindow.destroy();
+ipcMain.on('show-log-in-window', function () {
     loginWindow.show();
 });
 
-ipcMain.on('minimize', function() {
+ipcMain.on('show-main-window', function () {
+    mainWindow.show();
+})
+
+ipcMain.on('log-in', function (evt, args) {
+    loginWindow.hide();
+
+    mainWindow.webContents.send('user', args);
+    mainWindow.webContents.openDevTools();
+    mainWindow.show();
+});
+
+ipcMain.on('log-out', function () {
+    mainWindow.hide();
+    loginWindow.show();
+});
+
+ipcMain.on('minimize', function () {
     mainWindow.minimize();
 });
 
-ipcMain.on('maximize', function() {
-    console.log('IS_MAXIMIZED', mainWindow.isMaximized());
+ipcMain.on('maximize', function () {
     if (!mainWindow.isMaximized()) {
         mainWindow.maximize();
     } else {
@@ -100,6 +110,6 @@ ipcMain.on('maximize', function() {
     }
 });
 
-ipcMain.on('close', function() {
+ipcMain.on('close', function () {
     app.exit();
 });

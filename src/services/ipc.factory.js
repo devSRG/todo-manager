@@ -7,8 +7,10 @@ angular
 function ipc() {
     return {
         cmd: {
-            LOGIN: 'login',
-            LOGOUT: 'logout',
+            LOG_IN: 'log-in',
+            LOG_OUT: 'log-out',
+            SHOW_LOG_IN_WINDOW: 'show-log-in-window',
+            SHOW_MAIN_WINDOW: 'show-main-window',
             MINIMIZE: 'minimize',
             MAXIMIZE: 'maximize',
             CLOSE: 'close'
