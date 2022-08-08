@@ -25,13 +25,13 @@ function createLoginWindow() {
         }
     });
     
-    loginWindow.loadURL(`file://${__dirname}/build/html/login.html`);
+    loginWindow.loadFile('./build/html/login.html');
 }
 
 function createMainWindow() {
     mainWindow = new BrowserWindow({
-        width: 880 /*800*/,
-        height: 550 /*500*/,
+        width: 880,
+        height: 550,
         title: 'To do Manager',
         resizable: false,
         frame: false,
@@ -50,7 +50,8 @@ function createMainWindow() {
     scr_height = swh.height;
     x_center = (scr_width / 2) - 400;
     y_center = (scr_height / 2) - 250;
-    mainWindow.loadURL(`file://${__dirname}/build/html/index.html`);
+
+    mainWindow.loadFile(`./build/html/index.html`);
 }
 
 app.on('ready', function() {

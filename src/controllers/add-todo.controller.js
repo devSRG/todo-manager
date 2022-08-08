@@ -5,10 +5,10 @@ angular
 function AddTodoController($scope, orm) {
     var vm = this;
 
-    vm.editTodo = $scope.getDialogData() || {};
-    vm.title = vm.editTodo.title || "";
-    vm.description = vm.editTodo.description || "";
-    vm.categoryId = vm.editTodo.categoryId || null;
+    vm.editTodo = $scope.getDialogData();
+    vm.title = vm.editTodo && vm.editTodo.title || "";
+    vm.description = vm.editTodo && vm.editTodo.description || "";
+    vm.categoryId = vm.editTodo && vm.editTodo.categoryId || null;
     vm.dueDate = null;
     vm.complete = false;
     vm.categories = [];
@@ -18,11 +18,11 @@ function AddTodoController($scope, orm) {
     vm.toggleCategory = toggleCategory;
     vm.toggleDatePicker = toggleDatePicker;
     vm.textareaKeyDown = textareaKeyDown;
-    
+
     $scope.setSubmitCb(vm.editTodo ? update: add);
 
-    orm.Category.getAll().then(function (categories) {
-        vm.categories = categories;
+    orm.Category.getAll().then(function (data) {
+        vm.categories = data;
     });
 
     function add() {
