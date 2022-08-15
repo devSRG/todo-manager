@@ -65,7 +65,9 @@ function SettingsController($scope, constants, settings, orm) {
         orm.User.update(user.id, formatUser(user));
     }
 
-    function formatUser(user) {
+    function formatUser(data) {
+        var user = JSON.parse(JSON.stringify(data));
+
         user.settings = JSON.stringify(user.settings);
 
         return user;
