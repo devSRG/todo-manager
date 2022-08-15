@@ -40,9 +40,8 @@ function SettingsController($scope, constants, settings, orm) {
         var user = settings.getLoggedInUser();
 
         user.locale = locale;
-        user.settings = JSON.stringify(user.settings);
 
-        orm.User.update(user.id, user);
+        orm.User.update(user.id, formatUser(user));
     }
 
     function setFontSize(size) {
@@ -51,9 +50,8 @@ function SettingsController($scope, constants, settings, orm) {
         var user = settings.getLoggedInUser();
 
         user.settings.fontSize = size;
-        user.settings = JSON.stringify(user.settings);
 
-        orm.User.update(user.id, user);
+        orm.User.update(user.id, formatUser(user));
     }
 
     function setTheme(theme) {
@@ -62,10 +60,15 @@ function SettingsController($scope, constants, settings, orm) {
         var user = settings.getLoggedInUser();
 
         user.settings.theme = theme;
-        user.settings = JSON.stringify(user.settings);
         vm.theme = settings.getUserTheme();
 
-        orm.User.update(user.id, user);
+        orm.User.update(user.id, formatUser(user));
+    }
+
+    function formatUser(user) {
+        user.settings = JSON.stringify(user.settings);
+
+        return user;
     }
 
     function dispose() {
