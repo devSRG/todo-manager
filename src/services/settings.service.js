@@ -153,7 +153,7 @@ function settings($rootScope, util, database, constants, i18n) {
         if (this.config.fontSize != size) {
             this.config.fontSize = size;
 
-            $rootScope.$broadcast(constants.EVENT.FONTSIZE_UPDATED);
+            $rootScope.$broadcast(constants.EVENT.FONT_SIZE_UPDATED);
         }
     }
 
