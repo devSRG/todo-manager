@@ -12,7 +12,7 @@ function NavController($rootScope, $scope, constants, util, ipc, orm, settings) 
     vm.avatar = null;
     vm.firstLetter = null;
     vm.updatePage = updatePage;
-    vm.logOut = logout;
+    vm.logOut = logOut;
     vm.userAvailable = false;
 
     $scope.$on(constants.EVENT.INIT, init);
@@ -38,7 +38,7 @@ function NavController($rootScope, $scope, constants, util, ipc, orm, settings) 
         $rootScope.currentPage = page;
     }
 
-    function logout() {
+    function logOut() {
         orm.User.getPersistedUser().then(function (data) {
             if (data && data.persist) {
                 orm.User.setPersist(data.id, false).then(function () {

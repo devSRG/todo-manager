@@ -41,7 +41,7 @@ block content
         each item in menu
           li
             a(ng-class="{'selected': '" + item.page + "' === nav.currentPage}" href="#" ng-click="nav.updatePage('" + item.page + "')" ta-i18n=item.label)= item.text
-    button.logout(ng-click="nav.logOut()" ta-i18n="COMMON.logout") Log out
+    button.logout(ng-click="nav.logOut()" ta-i18n="COMMON.logOut") Log out
   main(ng-controller="PageController as pg" ng-class="{'blur': main.blurBackground}")
     each item in menu
       .pages(ng-class="[{'is-shown': '" + item.page + "' === pg.currentPage}, '" + item.page + "-page']" ng-include="'partials/" + item.page + ".html'")
